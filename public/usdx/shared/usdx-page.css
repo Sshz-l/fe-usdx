@@ -1,0 +1,1242 @@
+/* ============================================================
+       USDX 稳定币 · 单文件设计稿（H5 网页形态）
+       依据：domains/trading/tokenomics/20260725-USDX稳定币协议-spec.md
+       定位：面向 DeBox 生态项目方（spec C19）。主流程极简，协议级细节
+             走「就地折叠 + 独立仪表盘」双通道渐进披露。
+
+       形态：H5 网页（流式列 max-width 430 · 文档流滚动 · sticky 顶栏/CTA · 无手机壳）。
+             APP 形态稿已于 2026-08-06 下线（commit c91c422），本稿是 USDX 唯一设计稿。
+             H5 形态约定见 usdx-stablecoin.ui-spec.md §6.5。
+
+         屏幕流：
+           一级 Tab：s-mint 铸造（默认）/ s-swap 兑换 / s-redeem 赎回 / s-mine 我的
+           二级屏：s-claim 我的释放计划 → s-plan 单笔详情 ·
+                   s-swap-detail 兑换详情 · s-activity 历史记录
+           （s-home / s-protocol 已删除）
+
+       浮层：txConfirmSheet（铸造/赎回二次确认）/
+             explainSheet / priceSheet
+
+       文案铁律（spec §3.3 C17 / §5.2）：
+         1. 该部分产品定名「待解锁」（2026-07-31），但它「不是已铸造的 USDX」：
+            禁止叫「锁仓 USDX / 已锁定的 USDX / 冻结 USDX」这类暗示
+            「资产已在你名下被锁住」的说法，且凡出现处必须注明钱包查不到。
+         2. 正常赎回禁止叫「1:1 赎回 / 换回 USDT」——它发的是
+            USDT + BOX 双资产。
+         3. 赎回结果区永远双资产两行，禁止出现单一「预计到手 X USDT」。
+       ============================================================ */
+
+    /* ---------- 画布（H5 流式列 · 无手机壳，见 CLAUDE.md 硬规则 4） ---------- */
+    :root {
+      --h5-max-w: 430px;   /* iPhone 15 Pro Max 真机宽；设计基准仍是 393 */
+      --appbar-h: 52px;    /* 全局品牌栏高度；nav-bar 的 sticky top 与 .screen 的 min-height 都要减它 */
+      --tabs-h: 44px;      /* 一级导航栏高度；只在三个一级屏出现 */
+
+      /* 顶部氛围光晕（2026-08-06）：参数集中在这里，实现见 .app-frame。
+         高度取「品牌栏 52 + 一级导航 44 + Hero 卡约 190」，渐隐尾巴落在 Hero 下沿之后，
+         让光晕在第二张卡（USDX 指标）之前收干净，不与内容区争注意力。 */
+      --top-glow-h: 340px;
+      --top-glow-brand: 34%;   /* 左上主光源浓度（品牌绿） */
+      --top-glow-amber: 24%;   /* 右上副光源浓度（暖金，呼应稳定币的价值语义） */
+      /* 底部氛围光晕（2026-08-06）：顶部光晕的同构镜像（同样左绿右金，不做对角换色——
+         上下同侧同色才读作「同一片氛围包住页面」）。
+         动机：内容不足一屏时（首页 / 我的 / 各二级屏），.screen 的 min-height 会把剩余
+         空间留成一大片白，页面下半读作「没加载完」。底部补一层光晕把这片空白接住。
+         浓度刻意低于顶部（约 6 折）：顶部是品牌位要抓人，底部只是收口，压过头会跟
+         吸底 CTA / 内容末尾抢注意力。 */
+      --bottom-glow-h: 320px;
+      --bottom-glow-brand: 30%;
+      --bottom-glow-amber: 22%;
+      /* 顶栏「滚动后」的底色不透明度（置顶时是全透明，见三栏共享规则）。
+         滚动后光晕已滚出视野，栏的任务变回遮挡内容，故取高档位 */
+      --appbar-alpha: 84%;
+    }
+    /* 暗色下同样的百分比会偏刺眼（光晕叠在 #1A1A1C 上是加色关系），整体降一档；
+       栏底则要更实一点，暗色文字与背景对比本就更紧张 */
+    :root[data-theme="dark"] {
+      --top-glow-brand: 28%;
+      --top-glow-amber: 16%;
+      /* 底部主光源在暗色下要比顶部再多降一档：顶部是 radial（能量集中在角落），
+         底部是 linear（整条底边等浓），同样的百分比在暗底上会读成「头轻脚重」 */
+      --bottom-glow-brand: 17%;
+      --bottom-glow-amber: 10%;
+      --appbar-alpha: 88%;
+    }
+    html {
+      -webkit-tap-highlight-color: transparent;   /* 移动浏览器点击蓝闪 */
+      -webkit-text-size-adjust: 100%;             /* iOS 横屏字号膨胀 */
+      background: var(--bg-group);
+    }
+    /* ---------- H5 形态背景色决策（2026-08-05）----------
+       H5 列身用 --bg-surface（白），不用 mobile/ 稿继承的 --bg-page（#F2F2F5 浅灰）。
+       原因：H5 是网页，用户对网页底色的心智预期是白（微信文章 / DApp / Uniswap H5 莫不如此）。
+       浅灰底在 H5 里会让人潜意识觉得「加载未完成」，且 #F2F2F5 与白卡 #FFFFFF 明度差仅 ~1.5%，
+       卡片几乎只靠 1px 描边存在，整页读作「灰白一片」。改白底后：
+         · 页面与白卡同色，卡片靠 --border-2（#E5E5E5）描边建立边界，与微信 / 支付宝 H5 一致；
+         · 桌面两侧保留 --bg-group（#EFEFEF）灰，列身（白）与两侧（灰）层次仍清晰；
+         · 原来靠「灰底衬托白卡」的组件（.act-ic 图标底、sim 按钮）改用 --bg-subtle（#F8F8F8）
+           在白底上形成内凹槽位，层次反而比灰底时代更明确。
+       这是 H5 形态的范式决策，后续 H5 稿沿用。 */
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--bg-group);                /* 桌面两侧留白，与 H5 列身（白）拉开层次 */
+    }
+    .app-frame {
+      width: 100%;
+      max-width: var(--h5-max-w);
+      margin-inline: auto;
+      min-height: 100vh;
+      min-height: 100dvh;
+      /* ---------- 顶部 + 底部氛围光晕（2026-08-06）----------
+         列身仍是白底（--bg-surface 作为最底层 background-color），只在顶部 --top-glow-h
+         与底部 --bottom-glow-h 两段叠径向光源：左侧品牌绿（主）+ 右侧暖金（副），向页心渐隐到白。
+         用途是给这份「全站唯一 USDX 稳定币入口」一个品牌氛围头，而不是给每张卡换皮。
+         三个实现选择：
+           ① 光晕铺在 .app-frame 而非各屏：品牌栏 / 一级导航 / 二级屏 nav-bar 全都坐在
+              同一片光晕上，切屏时光晕不闪不跳（各屏自铺会在 display 切换时重绘）；
+           ② 用 background-image 的 no-repeat + size 限高，不用伪元素：伪元素要求
+              .app-frame position:relative，而那会捕获 fixed 浮层（见上方禁令）；
+           ③ 色值全部由 token 经 color-mix 派生（浓度见 :root 的 --top-glow-*），
+              不硬编码任何 rgba，暗色主题自动跟随 token 换算（硬规则 2）。 */
+      background:
+        radial-gradient(124% 78% at 2% 4%,
+          color-mix(in srgb, var(--brand-primary) var(--top-glow-brand), transparent) 0%,
+          transparent 68%) no-repeat top center / 100% var(--top-glow-h),
+        radial-gradient(96% 62% at 100% 0%,
+          color-mix(in srgb, var(--amber) var(--top-glow-amber), transparent) 0%,
+          transparent 62%) no-repeat top center / 100% var(--top-glow-h),
+        /* 底部两层，锚在 .app-frame 底边。.app-frame 的 min-height 是 100dvh，所以内容
+           不足一屏时它正好落在视口底部；内容长时它落在文档末尾，滚到底才现身——两种
+           情况都是「收口」而不是「装饰中段」。
+           这里主光源用 linear（to top）而不是像顶部那样用 radial：底部要托住的是一条
+           完整的空白带，radial 的能量集中在圆心，屏幕底边中段离两个角落圆心都远，
+           实测颜色被摊薄到几乎看不见。暖金仍用 radial 压右下角，保住与顶部的冷暖对角呼应 */
+        radial-gradient(88% 78% at 100% 100%,
+          color-mix(in srgb, var(--amber) var(--bottom-glow-amber), transparent) 0%,
+          transparent 64%) no-repeat bottom center / 100% var(--bottom-glow-h),
+        linear-gradient(to top,
+          color-mix(in srgb, var(--brand-primary) var(--bottom-glow-brand), transparent) 0%,
+          transparent 100%) no-repeat bottom center / 100% var(--bottom-glow-h),
+        var(--bg-surface);              /* H5 形态：列身白底，符合网页心智（见下方注释） */
+      display: flex;
+      flex-direction: column;
+      /* 禁止 overflow:hidden —— 会让本元素成为 sticky 的 scrollport，顶栏 / CTA 吸附全部失效。
+         也禁止 position:relative —— 屏不再 absolute，且会捕获 fixed 浮层 */
+    }
+
+    /* ---------- 多屏骨架（H5 文档流版 · 稿内标准）----------
+       与 mobile/ 稿的关键差异：非活动屏 display:none 退出文档流，活动屏参与文档流由 body 原生滚动。
+       代价：失去「旧屏右滑淡出」的同屏交叉转场，只保留入场动画。
+       收益：地址栏收缩 / 下拉回弹 / sticky 顶栏与吸底 CTA 全部拿到原生行为。
+       注：绝对定位层叠方案要求 .app-frame overflow:hidden，那会让 sticky 永不触发，二者不可兼得。 */
+    .flow { display: block; }
+    .screen {
+      display: none;
+      flex-direction: column;
+      /* 减去 .screen 外部的常驻栏高度，否则总高会超出一屏、凭空多出滚动。
+         二级屏外部只有品牌栏（nav-bar 在 .screen 内部，不用减） */
+      min-height: calc(100vh - var(--appbar-h));
+      min-height: calc(100dvh - var(--appbar-h));
+      /* 屏本身不铺底：列身白与顶部光晕都由 .app-frame 承担。
+         这里若再刷一层 --bg-surface，会把光晕整片盖掉（屏是光晕的正上方兄弟层） */
+      background: transparent;
+    }
+    .screen--tab {
+      min-height: calc(100vh - var(--appbar-h) - var(--tabs-h));
+      min-height: calc(100dvh - var(--appbar-h) - var(--tabs-h));
+    }
+    .screen.active {
+      display: flex;
+      /* 不写 fill-mode（默认 none）：入场动画只是装饰，不该锁定终态。
+         to 态本就等于 .screen 的声明值（无位移、opacity 1），所以动画播完、未播、
+         或被浏览器节流暂停（后台标签页）时，元素都落在正确位置。
+         用 both/forwards 反而会在动画未起播时保留 from 态，让整屏偏移 8px。 */
+      animation: screenIn .28s cubic-bezier(.32,.72,0,1);
+    }
+    /* 改用纵向微上移淡入，不用 mobile 稿的 translateX 横推，两个原因：
+       ① 网页里横推暗示「页面栈」，但本稿不接 history 路由，浏览器返回键会直接退出页面
+          ——暗示了栈却没有栈；
+       ② 横向位移会撑出横向滚动条：animation-fill-mode 的 backwards 在动画尚未起播时
+          （离屏 iframe / 后台标签页被浏览器节流）保留 from 态，translateX 会让整屏右移。
+          纵向位移无此风险（页面本来就纵向可滚）。 */
+    @keyframes screenIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: none; }
+    }
+    /* 一级 Tab 常驻 DOM 切换时不播放入场动画，避免页面晃动 */
+    .screen--tab.active {
+      animation: none;
+    }
+
+    /* ---------- 全局品牌栏（.app-bar，H5 DApp 通行的「品牌 + 钱包」条）----------
+       常驻 .app-frame 顶部，9 屏共享，与每屏的 nav-bar 上下叠为两条：
+       品牌栏答「这是谁的站、我连着哪个钱包」，nav-bar 答「我在哪一屏」，职责不重叠。
+       H5 脚手架 · 待第二份 h5 稿出现后归一进 components.css */
+    /* 三条 sticky 顶栏共享的「透光底」（2026-08-06 随顶部光晕引入）：
+       原先三条栏各刷实心 --bg-surface，会把光晕齐着栏底切一刀，栏与内容读成两片天。
+       改成两段式——
+         · 置顶（未滚动）：底色全透明，光晕原样透过栏体，顶部是一整片连续的色彩；
+         · 滚动后：补 --appbar-alpha 档的半透明底，配合 blur 挡住从栏下穿过的内容。
+       blur 常驻不随滚动切换：对纯渐变背景模糊等于无变化（置顶时零视觉代价），
+       但省掉了滚动瞬间「突然出现毛玻璃」的跳变。
+       ⚠️ 不要加 saturate()：它会把栏内的光晕提饱和，栏下沿立刻显出一条矩形硬边。
+       backdrop-filter 不支持时（旧 WebView）退化为半透明白底，滚动时仍可读，只是略透。 */
+    .app-bar, .main-tabs, .screen > .nav-bar {
+      background-color: transparent;
+      transition: background-color .2s ease;
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+    body[data-scrolled] :is(.app-bar, .main-tabs, .screen > .nav-bar) {
+      background-color: color-mix(in srgb, var(--bg-surface) var(--appbar-alpha), transparent);
+    }
+    .app-bar {
+      position: sticky; top: 0; z-index: 6;   /* 必须高于 nav-bar 的 5，低于浮层的 30 */
+      height: var(--appbar-h);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--sp-12);
+      padding: 0 var(--sp-16);
+      /* 置顶时不落分割线：栏与下方内容同处一片光晕，横一条灰线会把渐隐切断。
+         滚动后才补上（body[data-scrolled]），那时它承担的是「内容从栏下穿过」的边界交代 */
+      border-bottom: 0.5px solid transparent;
+      transition: border-bottom-color .2s ease;
+    }
+    body[data-scrolled] .app-bar { border-bottom-color: var(--border-2); }
+    .brand { display: flex; align-items: center; gap: var(--sp-8); min-width: 0; }
+    /* USDX logo（官方 icon 资源） */
+    .brand-mark {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border-radius: var(--r-full); object-fit: cover;
+    }
+    .brand-name {
+      font-size: var(--fs-16); font-weight: 600; color: var(--text-1);
+      letter-spacing: -.2px; white-space: nowrap;
+      /* 「USDX-Stablecoin」比原「USDX」长得多，320 窄屏会顶到连接按钮。
+         .bar-actions 是 flex-shrink:0，压缩只能落在这里：溢出省略而不是折行撑高栏 */
+      overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* 连接按钮：三态共用一个按钮壳，靠 data-state 切换外观（未连接 / 已连接 / 错误链） */
+    /* 动作区不参与压缩：要压先压左侧品牌（.brand 有 min-width:0），
+       否则连接按钮会被挤到 min-content，地址被迫折成两行把栏撑高 */
+    .bar-actions { display: flex; align-items: center; gap: var(--sp-8); flex-shrink: 0; }
+
+    /* ---------- 一级导航栏（.main-tabs）----------
+       首页 / 兑换 / 我的 三个一级屏的横向切换，吸在品牌栏下方。
+       只在一级屏出现：二级屏（铸造、赎回、协议数据…）用自己的 nav-bar 承担返回与屏名，
+       三条栏叠起来会吃掉 140px，那是 320px 高的窄屏放不下的。
+       用 kit 的 .tabs / .tab（下划线指示器），只补吸顶与等分两件事。 */
+    .main-tabs {
+      position: sticky; top: var(--appbar-h); z-index: 5;
+      height: var(--tabs-h);
+      flex-shrink: 0;
+      padding: 0 var(--sp-16);   /* 底色见上方三栏共享的「透光底」规则 */
+    }
+    .main-tabs .tab { flex: 1; text-align: center; }
+    /* 二级屏隐藏一级导航：靠 body[data-screen] 判断，名单与 SCREEN_TABS 保持一致 */
+    body:not([data-screen="s-mint"]):not([data-screen="s-swap"]):not([data-screen="s-redeem"]):not([data-screen="s-mine"]) .main-tabs {
+      display: none;
+    }
+
+    .connect-btn {
+      display: inline-flex; align-items: center; gap: var(--sp-6);
+      height: 32px; padding: 0 var(--sp-12);
+      border: 1px solid var(--border-2); border-radius: var(--r-full);
+      background: var(--bg-surface); color: var(--text-1);
+      font-family: var(--font-zh); font-size: var(--fs-13); font-weight: 500;
+      cursor: pointer; flex-shrink: 0; white-space: nowrap;
+    }
+    .connect-btn:active { opacity: .7; }
+    .connect-btn :is(i, svg) { width: 15px; height: 15px; flex-shrink: 0; }
+    /* 未连接：品牌色描边 + 品牌色字，是本栏唯一的「请你行动」信号 */
+    .connect-btn[data-state="off"] { border-color: var(--brand-primary); color: var(--brand-primary); }
+    /* 已连接：中性态，地址走等宽字体防抖动 */
+    .connect-btn[data-state="on"] { padding-left: var(--sp-4); }
+    .connect-btn[data-state="on"] .cb-addr { font-family: var(--font-mono); font-size: var(--fs-12); }
+    /* 错误链：danger 描边 + danger 字，与「未连接」的品牌色区分开——两者都是待办但性质不同 */
+    .connect-btn[data-state="wrong"] { border-color: var(--danger); color: var(--danger); }
+    .cb-dot { width: 6px; height: 6px; border-radius: var(--r-full); background: var(--brand-primary); flex-shrink: 0; }
+    .cb-avatar {
+      width: 20px; height: 20px; min-width: 20px; min-height: 20px;
+      border-radius: var(--r-full); flex-shrink: 0;
+      overflow: hidden;
+    }
+    span.cb-avatar {
+      background: var(--brand-primary); color: #fff;
+      display: grid; place-items: center;
+      font-size: 9px; font-weight: 700; font-family: var(--font-num);
+    }
+    img.cb-avatar {
+      display: block;
+      object-fit: cover;
+      background: var(--bg-subtle);
+    }
+
+    /* 顶栏吸顶：kit .nav-bar 无背景色，sticky 时必须补底否则滚动内容透字。
+       只加 position/z-index/background，不动 kit 的 height:44px 与 padding（硬规则 3）。
+       top 必须等于品牌栏高度，否则两条 sticky 栏会叠在一起。
+       底色见上方三栏共享的「透光底」规则（二级屏同样坐在顶部光晕里）。
+       H5 脚手架 · 待第二份 h5 稿出现后归一为 components.css 的 .nav-bar--sticky */
+    .screen > .nav-bar {
+      position: sticky; top: var(--appbar-h); z-index: 5;
+    }
+
+    .screen-body {
+      flex: 1 0 auto;                  /* grow 撑开短内容把 CTA 压到底；不 shrink，长内容溢出交给文档滚动 */
+      padding: 0 var(--sp-16) var(--sp-20);
+      display: flex; flex-direction: column; gap: var(--sp-12);
+    }
+    /* 一级屏顶部紧贴 .main-tabs，需要留间距（三个一级屏统一处理，不依赖首元素类名）。
+       二级屏顶部是 nav-bar（44px），nav-bar 自身高度已是视觉缓冲，不需要额外间距 */
+    .screen--tab > .screen-body { padding-top: var(--sp-12); }
+    /* 兜底 1：flex column 下子元素默认会被压缩，含 overflow:hidden 的卡片必须锁高 */
+    .screen-body > * { flex-shrink: 0; }
+    /* 兜底 2：hidden 必须压过组件类的 display:flex/grid（本稿大量用 hidden 切模式态） */
+    [hidden] { display: none !important; }
+
+    :where(button,input,[role="button"],[role="switch"],[tabindex]):focus-visible {
+      outline: 2px solid var(--brand-primary); outline-offset: 2px;
+    }
+    .num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+
+    /* ---------- 浮层骨架（H5：fixed 视口定位 + 列宽约束） ---------- */
+    .sheet-backdrop {
+      position: fixed;
+      top: 0; bottom: 0; left: 50%;
+      width: 100%; max-width: var(--h5-max-w);
+      transform: translateX(-50%);
+      z-index: 30;
+      opacity: 0; pointer-events: none;
+      transition: opacity .25s ease;
+      /* transform 已使本元素成为 absolute 后代的包含块，kit .half-sheet 的
+         absolute left/right/bottom:0 直接贴合本列，无需覆写组件 position */
+    }
+    /* 遮罩铺满整个视口（含桌面两侧留白），但 sheet 本体仍锁在中间列内。
+       ::before 不是事件目标，事件归属宿主 .sheet-backdrop，
+       所以「点遮罩关闭」的 e.target === bd 判断依然成立 */
+    .sheet-backdrop::before {
+      content: ""; position: fixed; inset: 0;
+      background: var(--scrim);
+    }
+    .sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+    .sheet-backdrop .half-sheet {
+      transform: translateY(100%);
+      transition: transform .32s cubic-bezier(.32,.72,0,1);
+    }
+    .sheet-backdrop.open .half-sheet { transform: translateY(0); }
+    /* 原 520px 是相对 852 定高屏取的定值；H5 视口高可变，改用 dvh 上限 */
+    .sheet-backdrop .half-sheet-body { max-height: min(520px, 55dvh); overflow-y: auto; overscroll-behavior: contain; }
+    /* 无 footer 的 sheet 内容会贴到视口底被 iOS 手势条压住（有 footer 的由 kit .half-sheet-footer 的 env() 兜住） */
+    .sheet-backdrop .half-sheet > .half-sheet-body:last-child {
+      padding-bottom: calc(var(--sp-12) + env(safe-area-inset-bottom, 0px));
+    }
+    /* alert 型浮层居中：kit .dialog 是 width:100%+max-width:300px 无 margin:auto，
+       不套 grid 居中会贴在容器左上角（mobile 稿的既有缺陷，H5 版修掉） */
+    .sheet-backdrop.dialog-host { display: grid; place-items: center; padding: 0 var(--sp-28); }
+    .sheet-backdrop .dialog { transform: scale(.94); opacity: 0; transition: transform .2s ease, opacity .2s ease; }
+    .sheet-backdrop.open .dialog { transform: scale(1); opacity: 1; }
+
+    .toast-host {
+      position: fixed;
+      left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: var(--h5-max-w);
+      bottom: calc(96px + env(safe-area-inset-bottom, 0px));   /* 96px 让开吸底 CTA */
+      z-index: 40;
+      display: flex; justify-content: center;
+      padding: 0 var(--sp-16);
+      opacity: 0; pointer-events: none; transition: opacity .2s ease;
+    }
+    .toast-host.show { opacity: 1; }
+
+    /* react-toastify：1:1 对齐设计稿 #toastHost + .toast（usdx-stablecoin.html） */
+    .usdx-toast-host.Toastify__toast-container {
+      width: 100%;
+      max-width: var(--h5-max-w);
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+      z-index: 40;
+      padding: 0 var(--sp-16);
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .usdx-toast-host .usdx-toast,
+    .usdx-toast-host .usdx-toast.Toastify__toast--error {
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      font-size: var(--fs-13);
+      line-height: 1.5;
+      padding: 12px 18px;
+      border-radius: var(--r-8);
+      min-height: unset;
+      box-shadow: none;
+      margin: 0 auto 0;
+      backdrop-filter: blur(8px);
+      font-family: var(--font-zh);
+      width: fit-content;
+      max-width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+    .usdx-toast-host .usdx-toast-body,
+    .usdx-toast-host .Toastify__toast-body {
+      padding: 0;
+      margin: 0;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      width: 100%;
+    }
+
+    /* ---------- 帮助触发器（? 图标，40×38 热区） ---------- */
+    .q-tip {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 16px; height: 16px; padding: 0; margin-left: 4px;
+      border: 0; background: none; color: var(--text-4);
+      cursor: pointer; vertical-align: -3px; position: relative;
+    }
+    /* 纵向只扩到 11px：.info-row 行高 38.4px，扩满 12px 会让相邻两行的 q-tip 热区互相重叠 */
+    .q-tip::before { content: ""; position: absolute; inset: -11px -12px; }
+    .q-tip i,
+    .q-tip svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .q-tip:active { color: var(--text-2); }
+
+    /* s-protocol：用虚线下划线替代 ? 图标做可解释引导。
+       不动全局 .q-tip（铸造/赎回/领取等屏仍在用图标），仅在此屏用 .explain-word。 */
+    .explain-word { text-decoration: underline dotted; text-underline-offset: 3px; text-decoration-color: var(--text-4); cursor: pointer; }
+    .explain-word:active { text-decoration-color: var(--text-2); }
+
+    /* 说明弹窗要点列表：标签 + 正文，替代长散文 */
+    .ex-points { display: flex; flex-direction: column; gap: var(--sp-14); }
+    .ex-point { display: flex; flex-direction: column; gap: 3px; }
+    .ex-pt-label { font-size: var(--fs-12); font-weight: 600; color: var(--text-3); letter-spacing: .04em; }
+    .ex-pt-text { font-size: var(--fs-13); color: var(--text-2); line-height: 1.6; }
+
+    /* ---------- 余额 Hero ----------
+       ⚠️ 2026-08-04 曾试过「去卡片容器、主数直接坐在页面上」，已被否决并回滚：
+       本设计系统的页底 --bg-page 是浅灰（#F2F2F5）而非纯白，去掉白卡等于把
+       最重要的内容放到比周围白卡更暗的底上，正文与三栏数字都变得难读。
+       结论：主数**更需要**白色卡面把它提亮，不是更不需要。后续不要再试。 */
+    .usdx-hero {
+      padding: var(--sp-18) var(--sp-16);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--r-8);
+      /* 全稿唯一带阴影的内容卡：它是唯一坐在顶部光晕里的卡，需要一点浮起感把
+         白卡面从彩色底上托开；光晕外的卡（.proto-card 等）仍只用描边，不跟进 */
+      box-shadow: var(--shadow-2);
+    }
+    /* 眼眉标签：11px + 正字距，是全稿唯一用字距做的排版手势，
+       用来把标签"降格"成注解、让数字独占视觉重量 */
+    .uh-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-12); }
+    .uh-label {
+      font-size: var(--fs-11); font-weight: 500; color: var(--text-2);
+      letter-spacing: .08em;
+    }
+    .uh-amt { margin-top: var(--sp-6); display: flex; align-items: baseline; gap: 6px; }
+    /* --fs-30 是 Token 最大档（原 34px 属硬编码违规，已改回档内） */
+    .uh-amt .num { font-size: var(--fs-30); font-weight: 700; color: var(--text-1); letter-spacing: -.5px; line-height: 1.1; }
+    .uh-cur { font-size: var(--fs-15); font-weight: 600; color: var(--text-2); }
+    .uh-sub { font-size: var(--fs-12); color: var(--text-4); }
+
+    /* 三栏摘要：用发丝线断开层级 */
+    .uh-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-8);
+      margin-top: var(--sp-16); padding-top: var(--sp-14);
+      border-top: 1px solid var(--border-2);
+    }
+    .uhs-k { font-size: var(--fs-11); color: var(--text-2); letter-spacing: .04em; }
+    .uhs-v { margin-top: var(--sp-4); font-size: var(--fs-15); font-weight: 400; color: var(--text-1); }
+    .uhs-v.pos { color: var(--brand-primary); }
+    /* 待解锁：占用户资产大头但暂时不可动，降为浅灰，三档里最弱 */
+    .uhs-v.muted { color: var(--text-3); }
+    /* 钱包余额：随时可用但在 USDX 语境里是次要参考（非铸造相关），降为中灰 */
+    .uhs-v.subtle { color: var(--text-2); }
+
+    /* ---------- 首页协议数据概览卡（2026-08-04，替代原品牌栏饼图入口）----------
+       只放三个「这协议靠不靠谱」的核心指标，整卡可点进 s-protocol 看全量。
+       三栏文字样式复用 .uhs-k / .uhs-v（纯文字类），但不复用 .uh-stats——
+       后者带 hero 内的 border-top 分隔线，独立成卡时那条线是多余的 */
+    /* ---------- 首页协议数据概览卡 ----------
+       2026-08-04 重构：原来是「净值大数 + 三个并列小数」，四个数字同权重，
+       读者无从判断哪个才说明「协议健不健康」。改为左右两栏——
+       左栏是覆盖率（唯一带健康语义的指标）+ 眼眉，右栏是它的构成。
+       刻意不给它第二条进度轨：Hero 已有一条，两条会互相稀释，
+       这里改用字号对比承担层级（signature 只该有一个）。 */
+    .proto-card {
+      width: 100%; text-align: left;
+      display: block;
+      padding: var(--sp-14) var(--sp-16) var(--sp-10);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-2); border-radius: var(--r-8);
+      font-family: var(--font-zh);
+    }
+    .proto-card:active { opacity: .7; }
+    /* 头部行：眼眉左 + 「更多」右，同行分布 */
+    .pc-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: var(--sp-12);
+    }
+    /* 卡片内眼眉：复用 Hero .uh-label 的排版语言（11px + 正字距），把原游离的
+       .sec-title 标题吸收进卡片，让 .proto-card 自包含 */
+    .pc-eyebrow {
+      font-size: var(--fs-11); font-weight: 500; color: var(--text-2);
+      letter-spacing: .08em;
+    }
+    /* 双覆盖率并列：这是本卡的核心。只给「当前 140%」会让人以为很安全，
+       而全部释放后是 58.33%——两个数必须同时在场，落差本身就是风险披露
+       （对应文案铁律：不承诺刚性 1:1） */
+    .pc-covers { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-12); }
+    .pc-cover { font-size: var(--fs-18); font-weight: 700; color: var(--text-1); letter-spacing: -.3px; }
+    .pc-cover.warn { color: var(--warning); }
+    /* 完全稀释率天然 <100%（0.7/1.2 的必然结果），是协议参数不是异常，
+       故取中性色——不能用 warning，那会把设计内的常态误报成风险 */
+    .pc-cover.fd { color: var(--text-1); }
+    .pc-cover-k { margin-top: 2px; font-size: var(--fs-11); color: var(--text-2); letter-spacing: .04em; }
+    /* 四项构成明细 */
+    .pc-rows {
+      margin-top: var(--sp-14); padding-top: var(--sp-12);
+      border-top: 1px solid var(--border-2);
+      display: flex; flex-direction: column; gap: var(--sp-8);
+    }
+    .pc-row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-12); }
+    .pc-row span { font-size: var(--fs-12); color: var(--text-2); }
+    .pc-row b {
+      font-family: var(--font-num); font-variant-numeric: tabular-nums;
+      font-size: var(--fs-13); font-weight: 400; color: var(--text-1);
+    }
+    .pc-row b .u { font-size: var(--fs-11); font-weight: 500; color: var(--text-4); margin-left: 3px; }
+    /* 卡尾入口：唯一的跳转触发器。整卡不再可点（数据只读），入口收口到这里。
+       移入头部行右上角，与「协议数据」眼眉同行 */
+    .pc-foot {
+      display: inline-flex; align-items: center; gap: 2px;
+      border: 0; background: none; padding: 0; cursor: pointer;
+      font-family: var(--font-zh); font-size: var(--fs-12); color: var(--text-4);
+    }
+    .pc-foot:active { opacity: .6; }
+    .pc-go { color: var(--text-4); width: 15px; height: 15px; }
+
+    /* ---------- s-mine 我的（一级屏）---------- */
+    .mine-menu {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-2); border-radius: var(--r-8);
+      overflow: hidden;
+    }
+    /* kit .li-row 是按 div 写的：用 button 承载要补 width / text-align / border / 字体。
+       border 必须只清左右上，保留 kit 的 border-bottom 行间线 */
+    .mine-menu .li-row {
+      width: 100%; text-align: left; cursor: pointer;
+      border: 0; border-bottom: 1px solid var(--border-2);
+      font-family: var(--font-zh);
+    }
+    .mine-menu .li-row:last-child { border-bottom: 0; }
+    .mine-menu .li-row:active { background: var(--bg-list); }
+    .mine-menu .li-row:disabled { cursor: default; opacity: .45; }
+    .mine-aside { display: flex; align-items: center; gap: var(--sp-6); font-size: var(--fs-13); color: var(--text-3); }
+    .mine-aside .pos { color: var(--brand-primary); }
+    .mine-aside .li-arrow { width: 16px; height: 16px; }
+
+    /* s-redeem「你将获得」卡尾协议快照：行样式复用 .pc-rows，容器节奏单独收口 */
+    #s-redeem .card .pc-rows { margin-top: 0; padding-inline: 18px; }
+    #usdxContractSheet .acct-addr { font-size: var(--fs-13); overflow-wrap: anywhere; word-break: break-all; }
+    #usdxContractSheet a[aria-disabled="true"] { pointer-events: none; opacity: .45; }
+
+    /* info-row 的 label 后缀比例（33% / 67%）：规则常量而非本次计算结果，弱化处理 */
+    .lbl-pct { font-family: var(--font-num); font-variant-numeric: tabular-nums; font-size: var(--fs-12); font-weight: 500; color: var(--text-4); }
+
+    /* ---------- 最近动态列表（仅 s-mine 摘要列表） ---------- */
+    #s-mine .act-list,
+    #mineActList.act-list {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--r-12);
+      overflow: hidden;
+    }
+    /* 最近动态里可点击的铸造记录：button 重置 + 手型 + 按压反馈 */
+    #s-mine .act-list button.li-row,
+    #mineActList.act-list button.li-row {
+      width: 100%; text-align: left; font-family: var(--font-zh); cursor: pointer;
+      border: 0; border-bottom: 1px solid var(--border-2);
+    }
+    /* 覆盖上方 button 规则的 border-bottom，避免仅一条时卡片底部多一条线 */
+    #s-mine .act-list .li-row:last-child,
+    #mineActList.act-list .li-row:last-child {
+      border-bottom: 0;
+    }
+    #s-mine .act-list .li-row--link:active,
+    #mineActList.act-list .li-row--link:active { background: var(--bg-list); }
+    /* 2026-08-04：圆形灰底改方圆角描边，与四宫格 .eb-ic 统一成一套图标容器语言；
+       流入/流出的区分交给右侧金额的正负号与颜色，不再靠图标底色重复表达一次 */
+    .act-ic {
+      width: 32px; height: 32px; border-radius: var(--r-full);
+      display: inline-grid; place-items: center;
+      background: var(--bg-subtle); border: 1px solid var(--border-2);
+      color: var(--text-3);
+    }
+    .act-ic svg { width: 15px; height: 15px; }
+    .act-ic.pos { color: var(--brand-primary); }
+    .act-amt { font-family: var(--font-num); font-variant-numeric: tabular-nums; font-size: var(--fs-14); font-weight: 400; line-height: 1.2; color: var(--text-1); }
+    .act-amt.pos { color: var(--success); }
+    /* 首页活动行标题/副行：与「全部动态」页 act-row 同口径（400 / 1.2），覆写 kit .li-title 的 500 */
+    .home-act-main .li-title { font-weight: 400; line-height: 1.2; margin-bottom: 0; }
+    .home-act-right .li-sub { line-height: 1.2; }
+    /* 首页活动行右侧：金额(上) + 日期(下) 纵向堆叠，右对齐；gap 与 act-row-aside 一致 */
+    .home-act-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; text-align: right; }
+    /* s-mine 摘要行与 s-activity 全量列表共用：日期行 + chevron */
+    .act-row-time-line { display: inline-flex; align-items: center; gap: 2px; }
+    .act-row-go { width: 14px; height: 14px; color: var(--text-4); }
+
+    /* nav-bar 一侧放两个动作时的容器（kit 的 .nav-side 是 36px 单槽）。
+       两侧同宽 68px 才能让标题保持真正居中；gap 12px 是 40px 热区互不重叠的最小值（28 + 12 = 40 中心距） */
+    .nav-actions { display: flex; align-items: center; justify-content: flex-end; gap: var(--sp-12); width: 68px; height: 36px; flex-shrink: 0; }
+    .nav-actions .icon-btn { position: relative; }
+    .nav-actions .icon-btn::before { content: ""; position: absolute; inset: -6px; }
+
+    /* ---------- 三入口 ---------- */
+    /* ---------- 动作入口（2026-08-05 重构：主 CTA + 次级三列）----------
+       原 4 等权列把铸造（USDX 的入口动作）稀释到和兑换/赎回/领取同权重，
+       新用户收不到「从这开始」。重构为两级：
+         · 铸造升全宽品牌绿主 CTA（带副标交代投入资产），「先铸造」引导最强；
+         · 兑换/赎回/领取降为次级三列，裸图标 + 文字，更轻，不与主 CTA 抢色；
+         · 领取的待办 badge 在次级位仍是唯一的行动信号（绿已留给数据与主 CTA）。
+       强调色（品牌绿）现在只出现在三处：主 CTA / 正向数据 / 可领取金额——
+       用满即等于没用。 */
+    /* 主 CTA：复用 kit .btn-primary 的色彩，自管布局（左图标 + 主副双标）。
+       不直接用 .btn-xl：它的 24px 全圆角是胖胶囊，与 H5 列式卡的 --r-8 语言不一致 */
+    .entry-cta {
+      display: flex; align-items: center; gap: var(--sp-12);
+      width: 100%; height: 52px; padding: 0 var(--sp-16);
+      border: 0; border-radius: var(--r-8);
+      background: var(--brand-primary); color: #fff;
+      cursor: pointer; font-family: var(--font-zh);
+      transition: background .15s ease;
+    }
+    .entry-cta:active { background: var(--brand-primary-hover); }
+    .entry-cta .ec-ic { flex-shrink: 0; display: grid; place-items: center; }
+    .entry-cta .ec-ic svg { width: 20px; height: 20px; }
+    .entry-cta .ec-text {
+      flex: 1; min-width: 0; text-align: left;
+      display: flex; flex-direction: row; align-items: baseline; gap: var(--sp-8);
+    }
+    .entry-cta .ec-title { font-size: var(--fs-15); font-weight: 600; line-height: 1.2; white-space: nowrap; }
+    .entry-cta .ec-sub { font-size: var(--fs-11); font-weight: 400; opacity: .85; line-height: 1.2; white-space: nowrap; }
+    .entry-cta .ec-arrow { flex-shrink: 0; opacity: .8; }
+    .entry-cta .ec-arrow svg { width: 18px; height: 18px; }
+
+    /* 次级四列：兑换/赎回/领取/社群。去掉原来的白底图标卡，裸图标 + 文字，层级明显低于主 CTA */
+    .entry-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-4); }
+    .entry-btn {
+      position: relative;
+      display: flex; flex-direction: column; align-items: center; gap: var(--sp-6);
+      padding: var(--sp-6) var(--sp-2);
+      background: none; border: 0;
+      cursor: pointer; font-family: var(--font-zh);
+      color: inherit; text-decoration: none;   /* 兼容 <a> 外链变体（社群入口，非 data-go 屏内跳转） */
+    }
+    .entry-btn:active { opacity: .6; }
+    /* 裸图标：无底色无边框，中性色，与主 CTA 的品牌绿拉开层级 */
+    .eb-ic {
+      width: 32px; height: 32px; border-radius: var(--r-8);
+      display: grid; place-items: center;
+      background: none; border: 0;
+      color: var(--text-3);
+    }
+    .entry-btn:active .eb-ic { color: var(--brand-primary); }
+    .eb-ic i, .eb-ic svg { width: 20px; height: 20px; }
+    /* 社群入口·DeBox app icon 徽标：彩色满版 32px 圆角，与另三个裸线性图标区分（品牌外链入口，主题无关） */
+    .eb-ic--app img { width: 32px; height: 32px; border-radius: var(--r-8); object-fit: cover; }
+    .eb-t { font-size: var(--fs-12); font-weight: 500; color: var(--text-2); line-height: 1.3; }
+    /* 领取红点锚到图标右上角 */
+    .eb-badge { position: absolute; top: 2px; right: calc(50% - 18px); }
+
+    /* ---------- 释放进度条（kit 无进度条组件；需 33% 起点刻度） ---------- */
+    .rel-track {
+      position: relative; height: 8px; border-radius: var(--r-full);
+      background: var(--bg-subtle); overflow: hidden;
+    }
+    .rel-fill {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      background: var(--brand-primary); border-radius: var(--r-full);
+      transition: width .3s ease;
+    }
+    .rel-fill.imm { background: var(--brand-primary); opacity: .45; }
+    .rel-mark { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--bg-surface); }
+    .rel-legend {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-top: var(--sp-6); font-size: var(--fs-11); color: var(--text-4);
+    }
+    /* 铸造分配双段条（33% 立即到账 ｜ 67% 每日释放） */
+    .split-viz { display: flex; height: 30px; border-radius: var(--r-8); overflow: hidden; }
+    .split-seg {
+      display: grid; place-items: center;
+      font-size: var(--fs-11); font-weight: 600; color: #FFFFFF;
+      white-space: nowrap; overflow: hidden;
+    }
+    .split-seg.a { background: var(--brand-primary); }
+    .split-seg.b { background: var(--brand-primary); opacity: .45; }
+    .split-seg.c { background: var(--info, #3188FF); }
+
+    /* ---------- 提示条（kit 无；四种语气全部走 token） ---------- */
+    .warn-ribbon {
+      display: flex; gap: var(--sp-8); align-items: flex-start;
+      padding: var(--sp-10) var(--sp-12);
+      border-radius: var(--r-10);
+      background: var(--warning-bg); color: var(--warning);
+      font-size: var(--fs-12); line-height: 1.5;
+    }
+    .warn-ribbon i { width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; }
+    /* lucide 会把 <i data-lucide> 直接替换为 <svg>（不是 i 包 svg），
+       故 :is(svg) 要作用到裸 svg 上，12px 与 12px 正文等高 */
+    .warn-ribbon > :is(i, svg) { width: 12px; height: 12px; flex-shrink: 0; margin-top: 1px; }
+    .warn-ribbon.ok-tone { background: var(--brand-primary-10); color: var(--brand-primary); }
+    .warn-ribbon.info-tone { background: rgba(49,136,255,0.1); color: var(--info); } /* kit 无 info-bg token，与 .badge.blue-ghost 同口径 */
+    .warn-ribbon.neutral-tone { background: var(--bg-subtle); color: var(--text-3); }
+    .warn-ribbon.danger-tone { background: rgba(225,61,51,0.1); color: var(--danger); } /* 同 .badge.red-ghost 口径 */
+    .warn-ribbon b { font-weight: 600; }
+    button.warn-ribbon { width: 100%; text-align: left; border: 0; font-family: var(--font-zh); cursor: pointer; }
+    button.warn-ribbon:active { opacity: .75; }
+
+    /* 铸造结果区（合成进 amt-block）：流向箭头 + 通栏铸造 pill，随输入显隐 */
+    .mint-result { margin-top: var(--sp-2); }
+    /* 流向箭头：居中，表达从上方双资产投入到铸造 pill 的流向 */
+    .mint-result .flow-arrow { display: flex; justify-content: center; padding: var(--sp-6) 0; color: var(--text-3); }
+    .mint-result .flow-arrow svg { width: 16px; height: 16px; }
+    /* 铸造 pill：通栏灰底，label 在左、铸造数量在右作为重点（区别于 USDT/BOX 的左对齐） */
+    .mint-mint-pill { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-8); padding: var(--sp-10) var(--sp-12); border-radius: var(--r-10); background: var(--bg-subtle); }
+    .mint-mint-pill .mm-label { font-size: var(--fs-13); color: var(--text-2); display: inline-flex; align-items: center; gap: 4px; }
+    .mint-mint-pill .mm-value { font-family: var(--font-num); font-variant-numeric: tabular-nums; font-size: var(--fs-16); font-weight: 600; color: var(--text-1); }
+
+    /* ---------- 大金额输入（沿用 perps 定型家族，尚未回流 kit） ---------- */
+    .amt-block {
+      padding: var(--sp-14) var(--sp-16) var(--sp-16);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--r-8);   /* H5 形态圆角档，与 .h5-form 下的 kit .card 对齐 */
+    }
+    /* 校验失败只走 .amt-err 红字，卡片本身不加红框 */
+    /* 闸门未解除时整块置灰，光靠快捷按钮 disabled 读不出「现在不能填」 */
+    .amt-block.locked { opacity: .45; }
+    .amt-head { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-8); min-width: 0; }
+    /* 赎回等：? 内嵌在 label 旁时用 flex 对齐，避免文字基线与 SVG 错位 */
+    .amt-label {
+      display: inline-flex; align-items: center; flex-shrink: 0;
+      font-size: var(--fs-13); color: var(--text-3); font-weight: 500;
+    }
+    /* 结果区标题（如赎回「你将获得」）。卡片内顶部，左对齐，与 .info-label 同口径 */
+    .amt-result-label { font-size: var(--fs-14); color: var(--text-3); font-weight: 500; }
+    .card > .amt-result-label { padding: 0 var(--sp-10) var(--sp-4); }
+    .amt-block > .amt-result-label { margin-top: var(--sp-12); }
+    .amt-result-label svg { width: 16px; height: 16px; vertical-align: middle; margin-right: 4px; }
+    .amt-avail { display: inline-flex; align-items: center; gap: 4px; font-size: var(--fs-12); color: var(--text-4); }
+    /* amt-block 内的 token 列表区：与上方输入区用细线分隔。
+       默认横向两列（铸造页精简 pill）；.stacked 变体纵向通栏（赎回页完整 token-row）。
+       紧跟 .amt-result-label 时去重复分隔线（label 已带 border-top） */
+    .amt-token-list { margin-top: var(--sp-12); padding-top: var(--sp-12); border-top: 1px solid var(--border-2); display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-8); }
+    .amt-result-label + .amt-token-list { margin-top: var(--sp-8); padding-top: 0; border-top: 0; }
+    .amt-token-list.stacked { display: flex; flex-direction: column; gap: var(--sp-2); }
+    /* token-list 内的流向箭头：跨两列居中（铸造页用） */
+    .amt-token-list > .flow-arrow { grid-column: 1 / -1; display: flex; justify-content: center; padding: var(--sp-2) 0 var(--sp-4); color: var(--text-3); }
+    .amt-token-list > .flow-arrow svg { width: 16px; height: 16px; }
+    /* 精简单行 pill：图标(24) + 币名/数量纵堆。不沿用 kit .token-row 的 3 列 grid——
+       那个结构在 ~150px 宽度下塞不下；此变体只保留核心三要素 */
+    .token-pill { display: flex; align-items: center; gap: var(--sp-8); padding: var(--sp-10); border-radius: var(--r-8); background: var(--bg-subtle); min-width: 0; }
+    .token-pill .token-ic { flex-shrink: 0; }
+    .token-pill .token-ic :is(.avatar,.avatar-round) { width: 24px; height: 24px; }
+    .token-pill .token-ic .chain-badge { display: none; }
+    .token-pill .tp-body { display: flex; flex-direction: column; min-width: 0; gap: 2px; }
+    .token-pill .tp-sym { font-size: var(--fs-12); font-weight: 400; color: var(--text-1); line-height: 1.2; }
+    .token-pill .tp-qty { font-size: var(--fs-14); font-weight: 600; color: var(--text-1); line-height: 1.2; overflow: hidden; text-overflow: ellipsis; }
+    /* 赎回页「你将获得」数量加粗（铸造页投入 pill 保持常规） */
+    #rdGainCard .tp-qty { font-weight: 700; }
+    .amt-avail :is(i,svg) { width: 13px; height: 13px; }
+    /* H5 形态：金额输入右对齐 24px（对齐 DeBox H5 现网风格；mobile 稿是居中 30px）。
+       24px > 16px，不会触发 iOS 输入框聚焦缩放。
+       ⚠️ 24px 是档外值：Token 字号档在 --fs-18 与 --fs-30 之间断档，输入框用 18 太小、
+       用 30 会与页面主数抢焦点。已登记为 Token 缺口，见 ui-spec §10.4 */
+    .amt-big-row { display: flex; justify-content: flex-end; margin-top: var(--sp-8); }
+    .amt-big-input {
+      flex: 1; min-width: 0; border: 0; background: none; padding: 0; text-align: right;
+      font-family: var(--font-num); font-variant-numeric: tabular-nums;
+      font-size: 24px; font-weight: 700; color: var(--text-1); letter-spacing: -.5px;
+      caret-color: var(--brand-primary);   /* 与 gas-account / cross-swap 的大金额输入一致 */
+    }
+    .amt-big-input:focus { outline: none; }
+    .amt-big-input::placeholder { color: var(--text-5); }
+    /* 报错是硬切出现，给一次性淡入 + 2px 上移软化；退出不做动画（退出应比进入更轻） */
+    .amt-err { display: flex; gap: 5px; align-items: center; margin-top: var(--sp-8); font-size: var(--fs-12); color: var(--danger); animation: amtErrIn .18s cubic-bezier(.32,.72,0,1); }
+    .amt-err i,
+    .amt-err svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .amt-err--muted { color: var(--text-4); animation: none; }
+    @keyframes amtErrIn { from { opacity: 0; transform: translateY(-2px); } }
+    .pct-row { display: flex; gap: var(--sp-8); margin-top: var(--sp-12); }
+
+    /* ---------- 兑换屏（s-swap）：两框拼接 + 大圆切换 + 滑条（参考 swap-page） ---------- */
+    .swap-cards { position: relative; }
+    .swap-card { background: var(--bg-surface); border: 1px solid var(--border-2); border-radius: var(--r-8); padding: var(--sp-14) var(--sp-16); }
+    .swap-card.pay { border-bottom-left-radius: 0; border-bottom-right-radius: 0; position: relative; padding-bottom: var(--sp-24); }
+    .swap-card.recv { border-top-left-radius: 0; border-top-right-radius: 0; border-top: 0; }
+    .sc-head { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-8); min-width: 0; }
+    .sc-title { font-size: var(--fs-13); color: var(--text-3); font-weight: 500; }
+    .sc-balance { font-size: var(--fs-12); color: var(--text-4); display: inline-flex; align-items: center; gap: 4px; }
+    .sc-balance :is(i,svg) { width: 13px; height: 13px; }
+    .sc-body { display: flex; align-items: center; gap: var(--sp-10); margin-top: var(--sp-8); }
+    /* token 展示：圆图标 + 符号（纯展示，非按钮） */
+    .sc-token { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px 4px 4px; font-size: var(--fs-14); font-weight: 600; color: var(--text-1); flex-shrink: 0; font-family: var(--font-zh); }
+    .sc-tic { width: 28px; height: 28px; border-radius: var(--r-full); overflow: hidden; display: grid; place-items: center; flex-shrink: 0; }
+    .sc-tic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* USDX 无公开图标资源，用品牌色 monogram 占位 */
+
+    /* 金额：右对齐 24px（H5 形态档，mobile 稿是 36px），input 与只读共用 */
+    .sc-amount { flex: 1; min-width: 0; border: 0; background: none; padding: 0; text-align: right; font-family: var(--font-num); font-variant-numeric: tabular-nums; font-size: 24px; font-weight: 700; color: var(--text-1); letter-spacing: -.5px; caret-color: var(--brand-primary); }
+    .sc-amount:focus { outline: none; }
+    .sc-amount::placeholder { color: var(--text-5); }
+    /* 大圆切换按钮：在 pay 框内绝对定位，bottom:-24px 骑在两框交界（移动端 48px） */
+    .swap-center { position: absolute; left: 50%; bottom: -24px; transform: translateX(-50%); width: 48px; height: 48px; border-radius: 50%; background: var(--bg-surface); border: 1px solid var(--border-2); display: grid; place-items: center; color: var(--brand-primary); cursor: pointer; z-index: 2; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+    .swap-center:active { opacity: .7; }
+    .swap-center :is(i,svg) { width: 20px; height: 20px; }
+    /* 滑条选比例（参考 sell-percent-slider，移动端缩放） */
+    .sc-slider { display: flex; align-items: center; gap: var(--sp-10); margin-top: var(--sp-10); }
+    /* 卡头内的滑条（兑换支付卡 + 赎回卡共用）：只占右侧 50% 宽度，滑条与 % 标签零间距 */
+    :is(.sc-head,.amt-head) .sc-slider { flex: 1 1 50%; max-width: 50%; min-width: 0; margin: 0 0 0 auto; gap: 0; }
+    :is(.sc-head,.amt-head) .sc-slider input[type="range"] { min-width: 0; width: 100%; }
+    .sc-head .sc-title { flex-shrink: 0; }
+    /* 赎回卡余额行（参考兑换支付卡下沉卡底）：margin-top 对齐 .sc-bal-row 节奏 */
+    #rdBox .amt-avail { display: flex; margin-top: var(--sp-10); }
+    /* 余额行错误态：原地替换为红色提示（信息位替换防晃动） */
+    .sc-balance--err { color: var(--danger); animation: amtErrIn .18s cubic-bezier(.32,.72,0,1); }
+    .sc-balance--muted { color: var(--text-4); }
+    .sc-bal-row { display: flex; justify-content: flex-start; align-items: center; margin-top: var(--sp-10); min-height: 18px; }
+    .sc-slider input[type="range"] { flex: 1; height: 24px; appearance: none; -webkit-appearance: none; background: transparent; cursor: pointer; }
+    .sc-slider input[type="range"]::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: var(--border-2); }
+    .sc-slider input[type="range"]::-moz-range-track { height: 4px; border-radius: 2px; background: var(--border-2); }
+    .sc-slider input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--text-3); margin-top: -6px; }
+    .sc-slider input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border: 0; border-radius: 50%; background: var(--text-3); }
+    .sc-slider input[type="range"]:active::-webkit-slider-thumb { background: var(--text-2); }
+    .sc-slider-label { min-width: 36px; font-family: var(--font-num); font-size: var(--fs-13); font-weight: 500; color: var(--text-3); text-align: right; font-variant-numeric: tabular-nums; }
+    .sc-slider-label.empty { visibility: hidden; }
+    /* 本稿 token-row 全是展示行（div，不可点），撤掉 kit 默认的手型指针以免误导 */
+    div.token-row { cursor: default; }
+    /* 相邻资产行拉开 8px：两行同为 bg-subtle 底，贴在一起会读成一块，圆角也失效 */
+    .token-row + .token-row { margin-top: var(--sp-8); }
+    /* token-pill 副行的钱包余额（币名/数量之下）：wallet 图标替代「钱包余额」四字 */
+    .token-pill .sub { display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 3px; font-size: var(--fs-12); color: var(--text-3); line-height: 1.3; overflow: hidden; min-width: 0; width: 100%; }
+    .token-pill .sub svg { display: block; flex: 0 0 12px; width: 12px; height: 12px; stroke-width: 1.75; }
+    .token-pill .sub .num { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* 国库构成两列（USDT | BOX）：每列图标+币名纵堆，数量大字 */
+    .pv-mix { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-8); padding: 0 var(--sp-12) var(--sp-16); }
+    .pv-mix-item {
+      display: flex; flex-direction: column; align-items: center; gap: var(--sp-6);
+      padding: var(--sp-14) var(--sp-8); background: var(--bg-subtle); border-radius: var(--r-8);
+    }
+    .pv-mix-item .chain-badge { display: none; }
+    .pv-mix-sym { font-size: var(--fs-12); color: var(--text-3); }
+    .pv-mix-qty { font-size: var(--fs-16); font-weight: 600; color: var(--text-1); letter-spacing: -.2px; }
+    .pv-mix-price { font-size: var(--fs-11); color: var(--text-4); }
+    /* USDX 合约地址·身份行（2026-08-06）：紧贴净值 Hero 之下，复用 .addr-copy 三件套。
+       左右内边距对齐 Hero 内容（sp-16），顶部 sp-12 与 Hero 分行；
+       .pv-addr-k 沿用 .uh-label 的眼眉语气（11px / text-4 / 正字距） */
+    .pv-addr { display: flex; flex-direction: column; gap: var(--sp-6); margin-top: var(--sp-12); padding: 0 var(--sp-16); }
+    .pv-addr-head { display: flex; align-items: center; gap: var(--sp-6); }
+    .pv-addr-k { font-size: var(--fs-11); color: var(--text-2); letter-spacing: .08em; }
+    /* 完整展示 42 位地址：覆写 .addr-text 的 nowrap+省略号，窄屏 word-break 折行也不截断（2026-08-06）。
+       与钱包地址（shortAddr 缩写）不同——合约地址要可逐位核验，故全显 */
+    .pv-addr .addr-text { white-space: normal; word-break: break-all; overflow: visible; text-overflow: clip; }
+
+    /* 协议数据底部「国库 + Swap 流动性」同一张白卡：两块标题/内卡连续排布，
+       中间不走 .screen-body 的 12px gap。只去描边和浮起阴影。 */
+    #s-protocol .card.flush {
+      border: 0;
+      box-shadow: none;
+      padding: 0;
+      background: var(--bg-surface);
+    }
+    /* 两处流动性标题必须同规：对齐 kit .card-title（设计稿 HTML 里 card-title--plain 无独立 CSS，
+       实际渲染即 15px/600/text-2）。避免 400/text-1 在底部绿色光晕上显浅、与上方标题观感不一致。 */
+    #s-protocol .card.flush .card-title {
+      padding: var(--sp-16) var(--sp-18) var(--sp-12);
+      font-family: var(--font-zh);
+      font-size: var(--fs-15);
+      font-weight: 600;
+      color: var(--text-2);
+      line-height: 1.4;
+    }
+    .card-title--plain { font-weight: 400; color: var(--text-1); }
+    .copy-btn svg { width: 16px; height: 16px; }
+    #s-protocol .uh-sub {
+      flex: 1; min-width: 0; text-align: right;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    /* 国库 / Swap 流动性：USDT·BOX 32px（DS.tokenIcon size:32）；USDX 官方标 28px（HTML 写死） */
+    #s-protocol .pv-mix-item .token-ic :is(.avatar, .avatar-round) {
+      width: 32px;
+      height: 32px;
+    }
+    #s-protocol .pv-mix-usdx {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--r-full);
+      object-fit: cover;
+      display: block;
+    }
+    #s-protocol .pv-mix-price {
+      border: 0;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+      font-family: var(--font-zh);
+    }
+    /* KPI 数字与 Hero 同用数字字体，字重/字号已在 .kpi-value */
+    #s-protocol .kpi-value {
+      font-family: var(--font-num);
+    }
+    /* 地址行图标色阶对齐稿：text-2 */
+    #s-protocol .pv-addr .copy-btn {
+      color: var(--text-2);
+    }
+    #s-protocol .pv-addr .addr-text {
+      font-size: var(--fs-12);
+      font-weight: 400;
+      color: var(--text-1);
+      line-height: 1.5;
+    }
+
+    /* ---------- 专业层折叠（就地渐进披露） ---------- */
+    .pro-fold {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--r-12);
+      overflow: hidden;
+    }
+    .pf-head {
+      display: flex; align-items: center; gap: var(--sp-8);
+      width: 100%; padding: var(--sp-12) var(--sp-14);
+      border: 0; background: none; cursor: pointer;
+      font-family: var(--font-zh); text-align: left;
+    }
+    .pf-head:active { opacity: .7; }
+    .pf-title { font-size: var(--fs-13); font-weight: 600; color: var(--text-2); }
+    .pf-summary { flex: 1; min-width: 0; text-align: right; font-size: var(--fs-12); color: var(--text-4); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pf-arrow { width: 15px; height: 15px; color: var(--text-4); flex-shrink: 0; transition: transform .15s ease; }
+    .pro-fold.open .pf-arrow { transform: rotate(180deg); }
+    /* 折价 / 兜底态强制展开：隐藏箭头并禁用收起 */
+    .pro-fold.locked .pf-head { pointer-events: none; }
+    .pro-fold.locked .pf-arrow { display: none; }
+    .pro-fold.locked .pf-summary { color: var(--warning); }
+    .pf-body { border-top: 0.5px solid var(--border-2); padding: var(--sp-4) 0 var(--sp-6); }
+    .pf-link {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: var(--sp-10) var(--sp-18);
+      border: 0; background: none; cursor: pointer;
+      font-family: var(--font-zh); font-size: var(--fs-12); color: var(--brand-primary); font-weight: 500;
+    }
+    .pf-link i { width: 14px; height: 14px; }
+
+    /* 兑换详情轻量展开触发器（去卡片，横线 + 文字 + 图标） */
+    #swapDetailFold { border: 0; background: none; border-radius: 0; }
+    #swapDetailFold .pf-head { justify-content: center; gap: var(--sp-10); padding: var(--sp-14) 0; font-size: var(--fs-12); font-weight: 500; color: var(--text-3); }
+    #swapDetailFold .pf-head::before,
+    #swapDetailFold .pf-head::after { content: ""; flex: 0 1 56px; height: 1px; background: var(--border-2); }
+    #swapDetailFold .pf-arrow { width: 14px; height: 14px; }
+    #swapDetailFold .pf-body { border-top: 0; }
+
+    /* ---------- 兑换页「USDX/USDT Swap 流动性」展开体 ---------- */
+    .liq-hero { padding: var(--sp-14) var(--sp-18) var(--sp-12); display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-12); }
+    .liq-section-title { padding: var(--sp-10) var(--sp-18) 0; border-top: 0.5px solid var(--border-2); font-size: var(--fs-12); font-weight: 600; color: var(--text-2); }
+    .liq-hero-col { text-align: center; }
+    .liq-hero-label { font-size: var(--fs-12); color: var(--text-4); margin-bottom: var(--sp-2); }
+    .liq-hero-amt { font-size: var(--fs-22); font-weight: 700; color: var(--text-1); letter-spacing: -.3px; line-height: 1.15; }
+    .liq-hero-unit { font-size: var(--fs-12); font-weight: 500; color: var(--text-3); margin-left: 2px; }
+    .liq-queue { padding: var(--sp-6) var(--sp-18) var(--sp-14); border-top: 0.5px solid var(--border-2); }
+    .liq-queue-title { font-size: var(--fs-12); font-weight: 600; color: var(--text-2); margin-bottom: var(--sp-2); }
+
+    /* ---------- 兑换详情页状态徽章 ---------- */
+    .spd-status { display: flex; flex-direction: column; align-items: center; gap: var(--sp-8); padding: var(--sp-20) 0 var(--sp-16); }
+    .spd-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px var(--sp-14); border-radius: var(--r-full); font-size: var(--fs-13); font-weight: 600; }
+    .spd-badge.done { background: var(--brand-primary-10); color: var(--brand-primary); }
+    .spd-badge.queued { background: rgba(49,136,255,0.1); color: var(--info, #3188FF); }
+    .spd-badge.cancelled { background: var(--bg-subtle, #F2F4F6); color: var(--text-4); }
+    .spd-badge i { width: 15px; height: 15px; }
+    .spd-badge svg { width: 15px; height: 15px; }
+    .spd-dir { font-size: var(--fs-13); color: var(--text-3); }
+
+    /* ---------- 我的挂单入口 + 抽屉列表（对齐 usdx-stablecoin.html #queueSheet） ---------- */
+    .queue-entry { display: flex; align-items: center; justify-content: flex-end; gap: 2px; width: 100%; padding: var(--sp-10) 0 0; border: 0; background: none; cursor: pointer; font-family: var(--font-zh); font-size: var(--fs-12); font-weight: 500; color: var(--brand-primary); }
+    .queue-entry:active { opacity: .7; }
+    .queue-entry i,
+    .queue-entry svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .queue-empty { padding: var(--sp-24) 0; text-align: center; font-size: var(--fs-13); color: var(--text-4); }
+    .queue-row { display: flex; align-items: center; gap: var(--sp-10); padding: var(--sp-12) 0; border-bottom: 0.5px solid var(--border-2); }
+    .queue-row:last-child { border-bottom: 0; }
+    .queue-idx { font-size: var(--fs-12); color: var(--text-4); font-family: var(--font-num); flex-shrink: 0; }
+    .queue-date { font-size: var(--fs-12); color: var(--text-3); flex-shrink: 0; }
+    .queue-main {
+      flex: 1 1 auto; min-width: 0;
+      display: flex; flex-direction: column; align-items: flex-end;
+      gap: var(--sp-6);
+    }
+    .queue-amt { display: block; text-align: right; font-size: var(--fs-13); font-weight: 600; color: var(--text-1); line-height: 1.3; }
+    .queue-sub { display: block; text-align: right; font-size: var(--fs-11); font-weight: 400; color: var(--text-3); line-height: 1.3; }
+    .queue-cancel {
+      flex-shrink: 0; padding: var(--sp-4) var(--sp-10); border: 0;
+      background: var(--warning-bg); color: var(--warning);
+      font-family: var(--font-zh); font-size: var(--fs-12); font-weight: 500;
+      border-radius: var(--r-full); cursor: pointer; line-height: 1.2;
+    }
+    .queue-cancel:disabled { opacity: .6; cursor: default; }
+    .queue-status { flex-shrink: 0; font-size: var(--fs-12); font-weight: 500; color: var(--text-4); }
+
+    /* 压过 Chakra reset：标题居中、关闭钮圆形、金额两行堆叠 */
+    #usdx-queue-sheet .half-sheet-header {
+      display: block;
+      position: relative;
+      padding: 10px 16px;
+      text-align: center;
+      border-bottom: 0.5px solid var(--border-2);
+    }
+    #usdx-queue-sheet .half-sheet-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    #usdx-queue-sheet .half-sheet-close {
+      position: absolute;
+      top: 50%; right: 12px;
+      transform: translateY(-50%);
+      width: 24px; height: 24px; padding: 0;
+      border: 0; border-radius: 50%;
+      background: var(--bg-group);
+      color: var(--text-3);
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    #usdx-queue-sheet .queue-main { display: flex; flex-direction: column; align-items: flex-end; }
+    #usdx-queue-sheet .queue-amt,
+    #usdx-queue-sheet .queue-sub { display: block; }
+
+    /* ---------- 协议仪表盘 KPI（不用 kit .stat-*：其 line-height:1 会裁中文字形） ---------- */
+    .kpi-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      background: var(--bg-surface);
+      border-radius: var(--r-12);
+      overflow: hidden;
+    }
+    /* 无框 KPI：去外圈描边 + 去内部十字分隔线（2026-08-06），与屏内其余模块同处一平面；
+       6 格靠 padding 留白 + 标签/数字字号层级自然成格（对标同类金融 App 的纯留白 KPI） */
+    .kpi-item { padding: var(--sp-14) var(--sp-16); }
+    .kpi-label { font-size: var(--fs-12); color: var(--text-3); line-height: 1.4; }
+    /* tabular-nums：协议数据动态更新，防数字跳宽（与 .num 一致，但保留正文字体外观） */
+    .kpi-value { margin-top: var(--sp-4); font-size: var(--fs-18); font-weight: 700; color: var(--text-1); line-height: 1.3; font-variant-numeric: tabular-nums; }
+    .kpi-value .sym { color: var(--text-3); font-weight: 400; }
+    .kpi-value.pos { color: var(--brand-primary); }
+    .kpi-value.warn { color: var(--warning); }
+
+    /* ---------- 领取 Hero ---------- */
+    .claim-hero { text-align: center; padding: var(--sp-18) 0 var(--sp-6); }
+    .ch-label { font-size: var(--fs-13); color: var(--text-3); }
+    .ch-amt { margin-top: var(--sp-4); display: flex; align-items: baseline; justify-content: center; gap: 6px; }
+    /* 与首页 / s-mine / s-protocol 的主数同档：全稿主数统一 --fs-30，
+       原 38px 比首页主数还大，跨屏层级是倒置的（且属硬编码违规） */
+    .ch-amt .num { font-size: var(--fs-30); font-weight: 700; color: var(--text-1); letter-spacing: -.5px; line-height: 1.1; }
+    .ch-cur { font-size: var(--fs-15); font-weight: 600; color: var(--text-2); }
+
+    /* ---------- 分笔释放计划卡 ---------- */
+    .plan-card {
+      padding: var(--sp-14) var(--sp-16);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--r-12);
+      cursor: pointer; text-align: left; width: 100%; font-family: var(--font-zh);
+    }
+    .plan-card:active { opacity: .7; }
+    .pc-head { display: flex; align-items: flex-start; gap: var(--sp-10); }
+    .pc-text { flex: 1; min-width: 0; }
+    .pc-title { font-size: var(--fs-14); font-weight: 400; color: var(--text-1); line-height: 1.35; }
+    .pc-sub { font-size: var(--fs-12); color: var(--text-3); line-height: 1.4; margin-top: 2px; }
+    .pc-aside { text-align: right; flex-shrink: 0; }
+    .pc-aside-label { font-size: var(--fs-11); color: var(--text-2); line-height: 1.3; }
+    .pc-aside-value { font-size: var(--fs-14); font-weight: 700; color: var(--brand-primary); line-height: 1.3; }
+    .pc-aside-value.zero { color: var(--text-4); }
+    .plan-card .rel-track { margin-top: var(--sp-12); height: 6px; }
+
+    /* ---------- 小件 ---------- */
+    .sec-title {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-top: var(--sp-4); padding: 0 var(--sp-2);
+      font-size: var(--fs-13); font-weight: 400; color: var(--text-2);
+    }
+    .sec-title span { font-size: var(--fs-12); font-weight: 500; color: var(--text-4); }
+    /* sec-title 右侧「全部 >」入口：弱化色文字链，无边框无背景，chevron 紧贴文字 */
+    .sec-more {
+      display: inline-flex; align-items: center; gap: 1px;
+      border: 0; background: none; padding: 0; cursor: pointer;
+      font-family: var(--font-zh); font-size: var(--fs-12); font-weight: 500; color: var(--text-4);
+    }
+    .sec-more:active { opacity: .7; }
+    .sec-more i { width: 14px; height: 14px; }
+    /* 全部动态页：每条记录独立卡片，四边描边（对齐 gas-account hist-row；不用 act-list 外框） */
+    #s-activity .act-feed { margin-top: var(--sp-8); }
+    #s-activity .act-row {
+      display: grid; grid-template-columns: 40px minmax(0, 1fr) auto;
+      column-gap: var(--sp-12); align-items: center;
+      padding: var(--sp-12) var(--sp-14); margin-bottom: var(--sp-8);
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-2);
+      border-right: 1px solid var(--border-2);
+      border-bottom: 1px solid var(--border-2);
+      border-left: 1px solid var(--border-2);
+      border-radius: var(--r-12);
+      box-sizing: border-box;
+    }
+    #s-activity .act-group .act-row:last-child { margin-bottom: 0; }
+    #s-activity .act-row-ic {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--bg-list); color: var(--text-2);
+    }
+    #s-activity .act-row-ic svg { width: 18px; height: 18px; }
+    #s-activity .act-row-main { min-width: 0; }
+    #s-activity .act-row-title { font-size: var(--fs-14); font-weight: 400; color: var(--text-1); line-height: 1.2; }
+    #s-activity .act-row-time { font-size: var(--fs-12); color: var(--text-3); line-height: 1.2; }
+    #s-activity .act-row-aside { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; white-space: nowrap; }
+    #s-activity .act-row-amt { font-family: var(--font-num); font-variant-numeric: tabular-nums; font-size: var(--fs-14); font-weight: 400; line-height: 1.2; }
+    #s-activity .act-row-amt.pos { color: var(--success); }
+    #s-activity .act-row-amt.neg { color: var(--text-1); }
+    /* 可点击行：button 需显式恢复四边描边（Chakra reset 会清 border-width） */
+    #s-activity button.act-row {
+      width: 100%; text-align: left; font-family: var(--font-zh); cursor: pointer;
+      -webkit-appearance: none; appearance: none;
+      border-top: 1px solid var(--border-2);
+      border-right: 1px solid var(--border-2);
+      border-bottom: 1px solid var(--border-2);
+      border-left: 1px solid var(--border-2);
+      background: var(--bg-surface);
+    }
+    #s-activity .act-row--link:active { opacity: .7; }
+    /* 月份分组标题 */
+    .act-day-head { margin: var(--sp-18) 0 var(--sp-8); font-size: var(--fs-13); font-weight: 600; color: var(--text-3); }
+    .act-day-head:first-child { margin-top: var(--sp-8); }
+    /* 加载更多 / 到底提示：与 gas-account 的 token-show-more / hist-end 同口径 */
+    .act-more {
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+      margin: var(--sp-10) auto 0; padding: 6px 12px;
+      border: 0; background: transparent; cursor: pointer;
+      font-family: var(--font-zh); font-size: var(--fs-12); font-weight: 600; color: var(--text-2);
+    }
+    .act-more:active { opacity: .7; }
+    .act-more i { width: 14px; height: 14px; }
+    .act-end {
+      padding: var(--sp-16) 0 calc(var(--sp-12) + env(safe-area-inset-bottom, 0px));
+      text-align: center; font-size: var(--fs-12); color: var(--text-4); line-height: 1.4;
+    }
+    .act-empty { text-align: center; margin-top: var(--sp-32); font-size: var(--fs-13); color: var(--text-4); }
+    .side-note { padding: 0 var(--sp-2); font-size: var(--fs-12); color: var(--text-4); line-height: 1.55; }
+    /* 吸底 CTA：sticky 同时占据文档流空间，滚到底自然落位、不遮挡末尾内容，
+       无需给 .screen-body 加 padding-bottom 魔法数；且天然继承列宽，不用重复水平居中 */
+    .cta-bar {
+      position: sticky;
+      bottom: 0;
+      z-index: 4;
+      flex-shrink: 0;
+      padding: var(--sp-10) var(--sp-16) calc(var(--sp-14) + env(safe-area-inset-bottom, 0px));
+      background: var(--bg-surface);
+      border-top: 0.5px solid var(--border-2);
+    }
+    /* 内联变体：跟随内容流，不吸底。用于内容简短、无需常驻 CTA 的屏（如 s-swap：
+       兑换框本身已是一屏内的核心交互，按钮紧跟内容即可，吸底反而占掉底部空间） */
+    .cta-bar--inline {
+      position: static;
+      z-index: auto;
+      border-top: 0;
+      padding-top: 0;
+      /* 不吸底就不需要遮挡任何东西，白底只会在底部光晕上留一条白矩形（2026-08-06 实测）。
+         基类的 --bg-surface 留给将来真正启用 sticky 吸底的场景 */
+      background: transparent;
+    }
+    .faq-group { background: var(--bg-surface); border: 1px solid var(--border-2); border-radius: var(--r-12); overflow: hidden; }
+    .faq-group details + details { border-top: 0.5px solid var(--border-2); }
+    .faq-group summary {
+      padding: var(--sp-12) var(--sp-16);
+      font-size: var(--fs-13); font-weight: 500; color: var(--text-1);
+      cursor: pointer; list-style: none;
+    }
+    .faq-group summary::-webkit-details-marker { display: none; }
+    .faq-group summary::after { content: "+"; float: right; color: var(--text-4); font-weight: 400; }
+    .faq-group details[open] summary::after { content: "−"; }
+    .faq-group p { margin: 0; padding: 0 var(--sp-16) var(--sp-14); font-size: var(--fs-12); color: var(--text-3); line-height: 1.6; }
+    .dual-out { display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-4) var(--sp-6) var(--sp-8); }
+    .info-value.pos { color: var(--brand-primary); }
+    .info-value.neg { color: var(--danger); }
+    .sheet-sec {
+      padding: var(--sp-12) var(--sp-4) var(--sp-4);
+      font-size: var(--fs-12); font-weight: 600; color: var(--text-3);
+    }
+
+    /* ---------- 账户 sheet（已连接态）---------- */
+    .acct-head { display: flex; align-items: center; gap: var(--sp-12); min-width: 0; }
+    .acct-meta { flex: 1; min-width: 0; }
+    .acct-addr { font-family: var(--font-mono); font-size: var(--fs-15); color: var(--text-1); }
+    .acct-net { margin-top: 2px; font-size: var(--fs-12); color: var(--text-3); display: inline-flex; align-items: center; gap: 5px; }
+    .acct-net::before { content: ""; width: 6px; height: 6px; border-radius: var(--r-full); background: var(--brand-primary); }
+    /* 错误链时圆点转 danger，与品牌栏按钮的语气一致 */
+    .acct-net.wrong { color: var(--danger); }
+    .acct-net.wrong::before { background: var(--danger); }
+    .acct-actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-8); margin-top: var(--sp-12); }
+    .acct-actions .btn :is(i, svg) { width: 15px; height: 15px; }
+    /* kit 的 .sheet-list-item 是按 div 写的（无 width、无 button 重置）。
+       这里用 button 承载——选钱包是操作，需要键盘可达与 :active 反馈——
+       故补上 button 的默认重置：不补 width 会是 fit-content，四项宽度参差不齐 */
+    #wsList .sheet-list-item {
+      width: 100%;
+      border: 0; border-bottom: 0.5px solid var(--border-2);
+      background: none; text-align: left; font-family: var(--font-zh);
+    }
+    #wsList .sheet-list-item:last-child { border-bottom: 0; }
+    #wsList .sheet-list-item:active { opacity: .7; }
+    /* 钱包列表项的图标槽（kit .sheet-list-item 只定义了 .sl-main / .radio，没有前置图标位） */
+    .ws-ic { width: 32px; height: 32px; flex-shrink: 0; border-radius: var(--r-8); display: grid; place-items: center; background: var(--bg-subtle); color: var(--text-2); }
+    .ws-ic :is(i, svg) { width: 18px; height: 18px; }
+
+    /* ---------- 铸造多步清单（txConfirmSheet 进度视图，对齐 HTML 2026-09-03）---------- */
+    .tx-confirm-sheet .half-sheet-body { position: relative; }
+    .txc-progress {
+      position: absolute; inset: 0; padding: 12px 16px;
+      background: var(--bg-surface); display: flex; flex-direction: column; justify-content: center;
+    }
+    .tx-steps { display: flex; flex-direction: column; gap: var(--sp-18); }
+    .tx-step { display: flex; align-items: center; gap: var(--sp-12); animation: txsRowIn .25s cubic-bezier(.2,0,0,1) both; animation-delay: calc(var(--i) * 60ms); }
+    @keyframes txsRowIn { from { opacity: 0; transform: translateY(4px); } }
+    .txs-ic { flex: 0 0 auto; width: 22px; height: 22px; border-radius: var(--r-full); display: grid; place-items: center; background: var(--bg-subtle); color: var(--text-3); transition: background-color .18s ease, color .18s ease; }
+    .txs-ic svg { width: 12px; height: 12px; }
+    .tx-step.is-done .txs-ic svg, .tx-step.is-fail .txs-ic svg { animation: txsPop .28s cubic-bezier(.2,0,0,1); }
+    @keyframes txsPop { from { opacity: 0; transform: scale(.25); filter: blur(4px); } }
+    .txs-label { flex: 1; min-width: 0; font-size: var(--fs-14); font-weight: 500; line-height: 1.4; }
+    .txs-state { flex-shrink: 0; margin-left: auto; font-size: var(--fs-12); color: var(--text-3); transition: color .15s ease; }
+    .tx-step.is-prep .txs-ic, .tx-step.is-wait .txs-ic { background: var(--brand-primary); color: #fff; }
+    .tx-step.is-prep .txs-state, .tx-step.is-wait .txs-state { color: var(--text-2); }
+    .tx-step.is-done .txs-ic { background: transparent; color: var(--brand-primary); }
+    .tx-step.is-fail .txs-ic { background: var(--danger); color: #fff; }
+    .tx-step.is-fail .txs-state { color: var(--danger); }
+    .txs-spin { display: block; width: 12px; height: 12px; border-radius: var(--r-full); border: 2px solid currentColor; border-top-color: transparent; animation: btnSpin .7s linear infinite; }
+    .sheet-primary:not(:disabled) { transition: transform .12s ease; }
+    .sheet-primary:not(:disabled):active { transform: scale(.96); }
+    .sheet-primary.is-loading {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .sheet-primary.is-loading:disabled { background: var(--brand-primary); color: #fff; }
+
+    @media (prefers-reduced-motion: reduce) {
+      /* .screen 走的是 animation 不是 transition（H5 文档流版），单列禁用 */
+      .screen.active { animation: none !important; }
+      .sheet-backdrop, .sheet-backdrop .half-sheet, .sheet-backdrop .dialog,
+      .rel-fill, .pf-arrow, .toast-host { transition: none !important; }
+      .amt-err { animation: none !important; }
+      .tx-step, .tx-step.is-done .txs-ic svg, .tx-step.is-fail .txs-ic svg,
+      .txs-spin { animation: none !important; }
+      .txs-ic, .txs-state, .sheet-primary { transition: none !important; }
+    }

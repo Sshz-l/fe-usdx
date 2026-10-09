@@ -1,0 +1,258 @@
+/* ============================================================
+   DeBox Design · 共享 Token 层
+   ------------------------------------------------------------
+   来源：specs/debox-design-system/styles.css（:root Token 区，1:1 抽取）
+   规则：本文件只放 Token 与最小基础样式，禁止出现页面级/组件级样式。
+        Token 修改必须与规范站 styles.css 双向同步，不得单边发明。
+   ============================================================ */
+
+/* ============ MiSans 远程字体 · jsDelivr CDN (woff2 分包按需加载) ============ */
+@import url('https://cdn.jsdelivr.net/npm/misans-webfont/misans/misans-thin/result.css');
+@import url('https://cdn.jsdelivr.net/npm/misans-webfont/misans/misans-extralight/result.css');
+@import url('https://cdn.jsdelivr.net/npm/misans-webfont/misans/misans-light/result.css');
+@import url('https://cdn.jsdelivr.net/npm/misans-webfont/misans/misans-normal/result.css');
+@import url('https://cdn.jsdelivr.net/npm/misans-webfont/misans/misans-regular/result.css');
+@import url('https://cdn.jsdelivr.net/npm/misans-webfont/misans/misans-medium/result.css');
+@import url('https://cdn.jsdelivr.net/npm/misans-webfont/misans/misans-demibold/result.css');
+@import url('https://cdn.jsdelivr.net/npm/misans-webfont/misans/misans-semibold/result.css');
+@import url('https://cdn.jsdelivr.net/npm/misans-webfont/misans/misans-bold/result.css');
+@import url('https://cdn.jsdelivr.net/npm/misans-webfont/misans/misans-heavy/result.css');
+
+:root {
+  /* — 基础色 — */
+  --bg-page: #F2F2F5;            /* 页面背景 */
+  --bg-surface: #FFFFFF;         /* 通用背景 / 卡片 */
+  --bg-list: #F6F6F6;            /* 通用列表背景 */
+  --bg-group: #EFEFEF;           /* 通用分组背景 */
+  --bg-input: #F6F6F6;           /* 弹窗输入框 */
+  --bg-subtle: #F8F8F8;          /* 次级背景 */
+  --bg-chat-pinned: rgba(237,237,237,0.9); /* 置顶背景色 */
+  --scrim: rgba(0,0,0,0.42);     /* 模态遮罩（弹窗/半屏/处理中覆盖层），深浅主题共用 */
+
+  /* — 描边 — */
+  --border-1: rgba(0,0,0,0.102); /* 描边色 10.2% */
+  --border-2: #E5E5E5;           /* 分割线 */
+  --border-3: #D9D9D9;
+
+  /* — 文字色 层级 — */
+  --text-1: rgba(0,0,0,0.898);   /* 一级 标题、正文 */
+  --text-2: rgba(0,0,0,0.549);   /* 二级 副标题、次级 */
+  --text-3: rgba(0,0,0,0.298);   /* 三级 时间、地址、辅助 */
+  --text-4: rgba(0,0,0,0.200);   /* 四级 备注、Tab、其他 */
+  --text-5: rgba(0,0,0,0.100);   /* 五级 输入框提示 */
+
+  /* — 品牌色 — */
+  --brand-primary: #21C161;      /* 主品牌色 */
+  --brand-primary-hover: #07C160;
+  --brand-primary-10: rgba(33,193,97,0.10);
+
+  /* — 功能色 — */
+  --danger: #E13D33;             /* 危险 / 删除 / 未读徽标 */
+  --notice: var(--danger);       /* 徽标统一复用 Danger,避免双红冲突 */
+  --warning: #E8A317;            /* 警告 · 对比度达标 (AA) */
+  --warning-bg: #FFF5D2;
+  --info: #3188FF;               /* 信息 / 链接 */
+  --success: #16931A;            /* 成功 · 与品牌绿明显区分 */
+  --purple: #7E5BEA;             /* 辅助紫 · NFT / DAO 模块 */
+  --amber: var(--warning);       /* 钱包强调 = 警告色,统一金黄体系 */
+
+  /* — 行情涨跌 (Web3 场景独立语义) — */
+  --price-up: #16931A;           /* 涨 · 国际惯例绿 */
+  --price-down: #E13D33;         /* 跌 · 国际惯例红 */
+
+  /* — 公链标识色 — */
+  --chain-eth: #627EEA;
+  --chain-bsc: #F0B90B;
+  --chain-polygon: #8247E5;
+  --chain-solana: #14F195;
+  --chain-arbitrum: #28A0F0;
+  --chain-base: #0052FF;
+
+  /* — U卡模块 · 渐变卡面（账户/卡片表面家族，三色系 + 玻璃质感辅助） — */
+  --ucard-grad-mint:
+    radial-gradient(circle at top left, rgba(255,255,255,0.84), transparent 44%),
+    linear-gradient(135deg, #F7FCF9 0%, #EEF9F3 50%, #FDF6E9 100%);
+  --ucard-grad-warm:
+    radial-gradient(circle at top left, rgba(255,255,255,0.86), transparent 44%),
+    linear-gradient(135deg, #FFF9EF 0%, #FFF2DF 52%, #FFFAF1 100%);
+  --ucard-grad-lavender:
+    radial-gradient(circle at top left, rgba(255,255,255,0.84), transparent 44%),
+    linear-gradient(135deg, #FAF8FF 0%, #F3EFFF 55%, #F8F6FF 100%);
+  --ucard-bg-canvas: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(247,247,243,0.92) 100%);
+  --ucard-glass-surface: rgba(255,255,255,0.92);
+  --ucard-glass-border: rgba(255,255,255,0.88);
+  --ucard-inner-glow: inset 0 1px 0 rgba(255,255,255,0.82);
+  --ucard-shadow: 0 18px 44px rgba(67,84,63,0.08);
+  --ucard-active-ring: rgba(33,193,97,0.34);
+
+  /* — 间距 — */
+  --sp-2: 2px;
+  --sp-4: 4px;
+  --sp-6: 6px;
+  --sp-8: 8px;
+  --sp-10: 10px;
+  --sp-12: 12px;
+  --sp-14: 14px;
+  --sp-16: 16px;
+  --sp-18: 18px;   /* 安全边距 */
+  --sp-20: 20px;
+  --sp-22: 22px;   /* 区块间距 */
+  --sp-24: 24px;
+  --sp-30: 30px;   /* 大间距 */
+  --sp-32: 32px;
+  --sp-40: 40px;
+  --sp-44: 44px;   /* 底部安全区 */
+
+  /* — 字号 — */
+  --fs-9: 9px;     /* 辅助极小 */
+  --fs-11: 11px;   /* 辅助小 */
+  --fs-12: 12px;   /* 正文小 / 次级标注 */
+  --fs-13: 13px;   /* 正文 */
+  --fs-14: 14px;   /* 强调正文 */
+  --fs-15: 15px;   /* 小标题 */
+  --fs-16: 16px;   /* 标题 */
+  --fs-17: 17px;   /* 大标题 */
+  --fs-18: 18px;   /* 特大标题 */
+  --fs-30: 30px;   /* 数字展示 */
+
+  /* — 圆角 — */
+  --r-4: 4px;
+  --r-5: 5px;
+  --r-6: 6px;
+  --r-8: 8px;
+  --r-10: 10px;
+  --r-12: 12px;
+  --r-16: 16px;
+  --r-20: 20px;
+  --r-full: 9999px;
+
+  /* — 阴影 — */
+  --shadow-1: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-2: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-3: 0 8px 24px rgba(0,0,0,0.08);
+  --shadow-4: 0 16px 48px rgba(0,0,0,0.12);
+
+  /* — 字体系统 · 三字体协作 — */
+  /* Inter / JetBrains Mono 不远程加载，依赖本机字体并按栈回退（与规范站一致） */
+  --font-zh: "MiSans", "PingFang SC", "PingFang HK", "HarmonyOS Sans SC", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-num: "Inter", "MiSans", "PingFang SC", -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-en: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ============================================================
+   Dark 主题 · v0 草案
+   ------------------------------------------------------------
+   由 Light Token 系统推导（表面色压暗、文字/描边换白色 alpha 同档、
+   功能色提亮一档保对比度），未经设计定稿。
+   Dark 规范在 specs/debox-design-system 立项后，以规范站为准双向同步。
+   启用方式：<html data-theme="dark">，设计稿支持 ?theme=dark URL 参数。
+   ============================================================ */
+
+:root { color-scheme: light; }
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* — 基础色 — */
+  --bg-page: #0F0F10;
+  --bg-surface: #1A1A1C;
+  --bg-list: #232325;
+  --bg-group: #2A2A2D;
+  --bg-input: #232325;
+  --bg-subtle: #202022;
+  --bg-chat-pinned: rgba(42,42,45,0.9);
+
+  /* — 描边 — */
+  --border-1: rgba(255,255,255,0.14);
+  --border-2: rgba(255,255,255,0.08);
+  --border-3: rgba(255,255,255,0.18);
+
+  /* — 文字色 层级（白色 alpha，与 Light 同档） — */
+  --text-1: rgba(255,255,255,0.898);
+  --text-2: rgba(255,255,255,0.549);
+  --text-3: rgba(255,255,255,0.298);
+  --text-4: rgba(255,255,255,0.200);
+  --text-5: rgba(255,255,255,0.100);
+
+  /* — 品牌色（不变，绿色在深底上对比度达标） — */
+  --brand-primary-10: rgba(33,193,97,0.16);
+
+  /* — 功能色（提亮一档保对比度） — */
+  --danger: #F0524A;
+  --warning: #F2B135;
+  --warning-bg: rgba(232,163,23,0.16);
+  --info: #4D9AFF;
+  --success: #1FAE24;
+  --purple: #9678F0;
+
+  /* — 行情涨跌（随功能色提亮） — */
+  --price-up: #1FAE24;
+  --price-down: #F0524A;
+
+  /* — U卡模块 · 渐变卡面（Dark 推导：色相保留、明度压暗、玻璃高光减弱） — */
+  --ucard-grad-mint:
+    radial-gradient(circle at top left, rgba(255,255,255,0.05), transparent 44%),
+    linear-gradient(135deg, #17211B 0%, #15201A 50%, #211F15 100%);
+  --ucard-grad-warm:
+    radial-gradient(circle at top left, rgba(255,255,255,0.05), transparent 44%),
+    linear-gradient(135deg, #232015 0%, #221D13 52%, #21201A 100%);
+  --ucard-grad-lavender:
+    radial-gradient(circle at top left, rgba(255,255,255,0.05), transparent 44%),
+    linear-gradient(135deg, #1E1B26 0%, #1C1828 55%, #1E1C24 100%);
+  --ucard-bg-canvas: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(18,18,19,0.92) 100%);
+  --ucard-glass-surface: rgba(255,255,255,0.06);
+  --ucard-glass-border: rgba(255,255,255,0.10);
+  --ucard-inner-glow: inset 0 1px 0 rgba(255,255,255,0.06);
+  --ucard-shadow: 0 18px 44px rgba(0,0,0,0.45);
+  --ucard-active-ring: rgba(33,193,97,0.45);
+
+  /* — 阴影（深底上加重 alpha） — */
+  --shadow-1: 0 1px 2px rgba(0,0,0,0.30);
+  --shadow-2: 0 2px 8px rgba(0,0,0,0.40);
+  --shadow-3: 0 8px 24px rgba(0,0,0,0.50);
+  --shadow-4: 0 16px 48px rgba(0,0,0,0.60);
+}
+
+/* ============ 最小基础样式（设计稿画布通用） ============ */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  color: var(--text-1);
+  font-family: var(--font-zh);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* a11y · 增对比度模式（系统设置「增加对比度」）：拉高三/四级灰阶 alpha，
+   配合 WCAG AA 正文 4.5:1；浅色暗色双主题共用同一档提升，保持语义层级 */
+@media (prefers-contrast: more) {
+  :root {
+    --text-3: rgba(0, 0, 0, 0.62);
+    --text-4: rgba(0, 0, 0, 0.42);
+    --text-5: rgba(0, 0, 0, 0.20);
+  }
+  [data-theme="dark"] {
+    --text-3: rgba(255, 255, 255, 0.62);
+    --text-4: rgba(255, 255, 255, 0.42);
+    --text-5: rgba(255, 255, 255, 0.20);
+  }
+}
+
+/* a11y · 减弱透明度（系统设置「降低透明度」）：玻璃材质回退实色 + 关闭 backdrop-filter，
+   防止半透明叠加在彩底卡面上造成阅读困难 */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --ucard-glass-surface: var(--bg-surface);
+  }
+  [data-theme="dark"] {
+    --ucard-glass-surface: var(--bg-surface);
+  }
+  .btn-glass, .card-status-pill, .mini-status, .sheet-inline-status {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

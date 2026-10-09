@@ -1,0 +1,1171 @@
+/* ============================================================
+   DeBox Design · 组件层（kit）
+   ------------------------------------------------------------
+   来源（按优先级）：
+   1. specs/debox-design-system/styles.css 组件区 —— 规范即法律，类名与尺寸 1:1 沿用
+   2. domains/trading/trading-design/20260515-app-swap-page.html（2x 画布，已折半归一）
+   3. domains/trading/swap/rn-swap/20260514-token-page-quotation.html（2x 画布，已折半归一）
+
+   适配性修改（相对规范站，为兼容双主题）：
+   - 硬编码表面色 #FFFFFF/#fff → var(--bg-surface)
+   - 硬编码描边 #E5E5E5/#D9D9D9 → var(--border-2)/var(--border-3)
+   其余数值不得改动；新组件入库须先在规范站立项或在此标注「试行」。
+   依赖：同目录 tokens.css（必须先引入）。
+   ============================================================ */
+
+/* ============ 按钮（规范站 1:1） ============ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-zh);
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: transform .08s ease, opacity .12s ease, background .12s ease;
+  white-space: nowrap;
+  line-height: 1;
+}
+/* 按下反馈：iOS-like opacity 而非 scale（更克制，不晃动版面） */
+.btn:active { opacity: 0.7; }
+.btn[disabled] { opacity: .4; cursor: not-allowed; }
+
+.btn-primary { background: var(--brand-primary); color: #FFFFFF; }
+.btn-primary:hover { background: var(--brand-primary-hover); }
+.btn-secondary { background: var(--bg-surface); color: var(--text-1); border: 1px solid var(--border-2); }
+.btn-secondary:hover { background: var(--bg-list); }
+.btn-ghost { background: var(--brand-primary-10); color: var(--brand-primary); }
+.btn-ghost:hover { background: rgba(33,193,97,0.18); }
+/* .btn-tinted 是 .btn-ghost 的语义别名，命名对齐 iOS .tinted / Android Material Tonal；
+   新业务页推荐使用 .btn-tinted，方便 RN 端按平台 idiom 落地。视觉与 .btn-ghost 等价 */
+.btn-tinted { background: var(--brand-primary-10); color: var(--brand-primary); }
+.btn-tinted:hover { background: rgba(33,193,97,0.18); }
+/* .btn-tonal-neutral：中性 tonal 次级按钮（与品牌色 .btn-tinted 同形态，但去色），
+   用于一组按钮里弱化非主操作（如「提现 / 历史」相对「充值」） */
+.btn-tonal-neutral { background: var(--bg-list); color: var(--text-2); }
+.btn-tonal-neutral:hover { background: var(--bg-group); color: var(--text-1); }
+.btn-outline { background: transparent; color: var(--brand-primary); border: 1px solid var(--brand-primary); }
+.btn-danger { background: var(--danger); color: #FFFFFF; }
+.btn-danger-ghost { background: rgba(225,61,51,0.08); color: var(--danger); }
+
+/* 尺寸五档 · 胶囊圆角 r = h/2 */
+.btn-xl { height: 48px; padding: 0 24px; border-radius: 24px; font-size: 16px; }
+.btn-lg { height: 44px; padding: 0 22px; border-radius: 22px; font-size: 15px; }
+.btn-md { height: 36px; padding: 0 18px; border-radius: 18px; font-size: 14px; }
+.btn-sm { height: 28px; padding: 0 14px; border-radius: 14px; font-size: 13px; }
+.btn-xs { height: 22px; padding: 0 10px; border-radius: 11px; font-size: 11px; }
+.btn-block { width: 100%; }
+
+/* 按钮 loading 态：左侧旋转环（继承文字色 currentColor，不引入新色）+ .is-loading 锁点击；
+   用法：btn.classList.add('is-loading'); btn.innerHTML='<span class="btn-spinner"></span>…中'（勿用 disabled，避免 .4 变灰） */
+.btn-spinner { display: inline-block; width: 18px; height: 18px; border-radius: var(--r-full); border: 2px solid currentColor; border-top-color: transparent; animation: btnSpin .7s linear infinite; }
+.btn.is-loading { pointer-events: none; }
+@keyframes btnSpin { to { transform: rotate(360deg); } }
+
+/* 圆形图标按钮（swap 页 icon-btn 56→28 归一） */
+.icon-btn {
+  width: 28px;
+  height: 28px;
+  display: inline-grid;
+  place-items: center;
+  color: var(--text-2);
+  border-radius: var(--r-8);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.icon-btn:hover { background: var(--bg-list); color: var(--text-1); }
+.icon-btn svg, .icon-btn [data-lucide] { width: 22px; height: 22px; }
+
+/* 玻璃胶囊次级 CTA（卡面内嵌 chip · 34px 独立档 · 玻璃语言 §11.2 / §11.3）
+   仅限玻璃卡面内的次级动作；命中区扩展到 44pt 满足 iOS HIG。
+   不与 .btn-sm/md 等主按钮档对齐——视觉档独立。
+   backdrop-filter 配 saturate 在彩色渐变卡面上拿到真"磨砂玻璃"效果；
+   reduce-transparency 兜底由 tokens.css 负责把背景换实色 + 关闭模糊 */
+.btn-glass {
+  border: 0;
+  min-height: 34px;
+  padding: 0 var(--sp-8);
+  border-radius: 999px;
+  background: var(--ucard-glass-surface);
+  box-shadow: var(--ucard-inner-glow);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  color: var(--text-2);
+  font-family: var(--font-zh);
+  font-size: var(--fs-13);
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 180ms ease;
+  position: relative;
+}
+.btn-glass::before {
+  content: '';
+  position: absolute;
+  inset: -5px -6px;
+}
+.btn-glass:active { opacity: 0.7; }
+
+/* 强调变体：玻璃底 + 品牌色文字（次级动作中需要更高识别度时） */
+.btn-glass.accent { color: var(--brand-primary); }
+
+/* 圆形变体：34×34 圆 icon 按钮（用于"更多"等图标动作） */
+.btn-glass.round {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+}
+.btn-glass.round::before { inset: -5px; }
+.btn-glass.round svg, .btn-glass.round [data-lucide] { width: 16px; height: 16px; }
+
+/* ============ 输入框（规范站 1:1） ============ */
+.input {
+  width: 100%;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: var(--r-10);
+  border: 1px solid var(--border-2);
+  background: var(--bg-surface);
+  font-size: 14px;
+  color: var(--text-1);
+  font-family: var(--font-zh);
+  outline: none;
+  transition: border-color .12s ease;
+}
+.input::placeholder { color: var(--text-4); }
+.input:focus { border-color: var(--brand-primary); }
+.input-filled { background: var(--bg-list); border-color: transparent; }
+/* 试行 · 下划线变体：无框无底仅底部一条线，聚焦线转中性加深（不用品牌绿），用于卡内轻量行内输入 */
+.input-line { border: none; border-radius: 0; border-bottom: 1px solid var(--border-2); background: none; padding: 0; height: 36px; }
+.input-line:focus { border-bottom-color: var(--border-3); }
+.input-search {
+  background: var(--bg-list);
+  border-color: transparent;
+  border-radius: var(--r-20); /* 搜索式输入 = 20px 胶囊 */
+  padding-left: 36px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none' stroke='%238d8d8d' stroke-width='1.5'><circle cx='6' cy='6' r='4.5'/><path d='M12.5 12.5L9.5 9.5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: 12px center;
+}
+.textarea { min-height: 96px; padding: 12px 14px; resize: vertical; line-height: 1.6; }
+
+/* ============ 开关 & 选择（规范站 1:1） ============ */
+.switch {
+  position: relative;
+  width: 44px;
+  height: 26px;
+  background: var(--border-2);
+  border-radius: 13px;
+  flex-shrink: 0;
+  transition: background .15s ease;
+  cursor: pointer;
+}
+.switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  background: #FFFFFF;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,.18);
+  transition: left .15s ease;
+}
+.switch.on { background: var(--brand-primary); }
+.switch.on::after { left: 20px; }
+
+.radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.radio.on { border-color: var(--brand-primary); }
+.radio.on::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--brand-primary); }
+
+.check {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--r-4);
+  border: 1.5px solid var(--border-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.check.on { border-color: var(--brand-primary); background: var(--brand-primary); }
+.check.on::after { content: ""; width: 8px; height: 4px; border-left: 1.5px solid #fff; border-bottom: 1.5px solid #fff; transform: rotate(-45deg) translate(1px,-1px); }
+
+/* ============ 头像（规范站 1:1） ============ */
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #bfd7ef 0%, #96c1ea 100%);
+  color: #FFFFFF;
+  font-family: var(--font-num);
+  font-weight: 500;
+  overflow: hidden;
+  flex-shrink: 0;
+  user-select: none;
+  position: relative;
+}
+.avatar-square { border-radius: var(--r-10); }
+.avatar-round  { border-radius: 50%; }
+.avatar-rounded { border-radius: 28%; }
+.avatar-16 { width: 16px; height: 16px; font-size: 8px; }
+.avatar-24 { width: 24px; height: 24px; font-size: 10px; }
+.avatar-32 { width: 32px; height: 32px; font-size: 12px; }
+.avatar-40 { width: 40px; height: 40px; font-size: 14px; }
+.avatar-48 { width: 48px; height: 48px; font-size: 16px; }
+.avatar-56 { width: 56px; height: 56px; font-size: 18px; }
+.avatar-64 { width: 64px; height: 64px; font-size: 20px; }
+.avatar-80 { width: 80px; height: 80px; font-size: 24px; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* 图片头像内描边（仅含 img 的头像）：1px 纯黑/纯白低透明（--border-1，双主题自适应），
+   补图片边缘与背景的深度一致性；纯色字母头像不加。因 avatar overflow:hidden，用 inset ring 不被裁 */
+.avatar:has(img)::after {
+  content: ''; position: absolute; inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px var(--border-1);
+  pointer-events: none;
+}
+
+.avatar.tone-a { background: linear-gradient(135deg, #FFB77A, #FF7A5A); }
+.avatar.tone-b { background: linear-gradient(135deg, #9BE4B6, #21C161); }
+.avatar.tone-c { background: linear-gradient(135deg, #B9D7EF, #96C1EA); }
+.avatar.tone-d { background: linear-gradient(135deg, #B9A5EF, #7E5BEA); }
+.avatar.tone-e { background: linear-gradient(135deg, #F5D98C, #E8A317); }
+.avatar.tone-f { background: linear-gradient(135deg, #F2B0B0, #E13D33); }
+.avatar.tone-gray { background: var(--bg-group); color: var(--text-2); }
+
+/* ============ 代币图标 token-ic（token logo + 链角标叠加组件） ============
+   用法：<span class="token-ic">${DS.tokenIcon(...) 输出}</span>
+   token-ic 是 inline-flex 容器，尺寸紧贴内部 avatar，使 .chain-badge 相对它定位 = 相对 avatar 定位；
+   line-height:0 消除 baseline 间隙，避免 badge 错位。
+   grid 场景（.token-row）需在特化规则里加 justify-self:start 防止被拉伸到列宽。 */
+.token-ic { position: relative; display: inline-flex; flex: 0 0 auto; line-height: 0; }
+.token-ic .chain-badge { position: absolute; right: -2px; bottom: -2px; width: 14px; height: 14px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 2px var(--bg-surface); }
+.token-ic .chain-badge img { width: 100%; height: 100%; display: block; }
+
+/* 地址 + 复制按钮组合（行内排列，等宽数字） */
+.addr-copy { display: inline-flex; align-items: center; gap: 4px; }
+
+/* ============ 通用复制按钮（icon 闪勾反馈） ============ */
+.copy-btn { display: inline-flex; align-items: center; justify-content: center; padding: 4px; border: 0; background: none; color: var(--text-2); cursor: pointer; transition: color 150ms ease; }
+.copy-btn [data-lucide] { width: 16px; height: 16px; }
+.copy-btn.done { color: var(--success, #21C161); pointer-events: none; }
+
+/* ============ 地址文本（单行等宽，不加粗） ============ */
+.addr-text { flex: 1; color: var(--text-1); font-family: var(--font-num); font-size: 12px; font-weight: 400; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* 用户名 + 地址组合（withdraw 收款方）：上行 ZH 名字、下行等宽地址 */
+.addr-text .addr-name { font-family: var(--font-zh); font-size: var(--fs-14); font-weight: 700; }
+.addr-text .addr-sub { display: block; margin-top: var(--sp-2); color: var(--text-2); font-size: var(--fs-12); font-weight: 500; }
+
+/* ============ 徽章 & 标签（规范站 1:1） ============ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--notice);
+  color: #FFFFFF;
+  font-family: var(--font-num);
+  font-size: 11px;
+  font-weight: 500;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 5px;
+  border-radius: 8px;
+  line-height: 1;
+}
+.badge.dot { width: 8px; height: 8px; min-width: 0; padding: 0; border-radius: 50%; }
+.badge.lg { min-width: 20px; height: 20px; font-size: 12px; border-radius: 10px; padding: 0 6px; }
+.badge.gray { background: var(--text-3); }
+.badge.success { background: var(--brand-primary); }
+.badge.warn { background: var(--warning); }
+.badge.outline-success { background: transparent; color: var(--brand-primary); border: 1px solid var(--brand-primary); }
+.badge.amber-ghost { background: rgba(255,172,47,0.12); color: var(--amber); border-radius: var(--r-4); }
+.badge.green-ghost { background: var(--brand-primary-10); color: var(--brand-primary); border-radius: var(--r-4); }
+.badge.blue-ghost { background: rgba(49,136,255,0.1); color: var(--info); border-radius: var(--r-4); }
+.badge.red-ghost { background: rgba(225,61,51,0.1); color: var(--danger); border-radius: var(--r-4); }
+.badge.gray-ghost { background: transparent; color: var(--text-3); border-radius: var(--r-4); }
+
+/* 昵称旁 img 勋章（绿标/金标/等级/VIP 等 SVG 资源，specs/debox-design-system/assets/）。
+   源自 transfer 稿，第三使用方（c2c 卖家行）出现后回流 */
+.li-badge { height: 14px; width: auto; display: inline-block; vertical-align: middle; flex: 0 0 auto; }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: var(--r-5);
+  font-size: 11px;
+  font-family: var(--font-num);
+  font-weight: 500;
+  border: 1px solid;
+  background: transparent;
+  line-height: 1.2;
+  gap: 3px;
+}
+.tag.green { color: var(--brand-primary); border-color: var(--brand-primary); }
+.tag.blue { color: var(--info); border-color: var(--info); }
+.tag.amber { color: var(--amber); border-color: var(--amber); }
+.tag.red { color: var(--danger); border-color: var(--danger); }
+.tag.gray { color: var(--text-2); border-color: var(--border-3); }
+
+/* ============ 列表行（规范站 1:1） ============ */
+.li-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg-surface);
+  align-items: center;
+  border-bottom: 1px solid var(--border-2);
+}
+.li-row > * { min-width: 0; }
+.li-row:last-child { border-bottom: none; }
+.li-row.compact { padding: 8px 16px; }
+/* 试行 · 无前导头像的两列变体（文本 + 右侧附件），用于地址簿等纯文字列表 */
+.li-row.li-2col { grid-template-columns: minmax(0, 1fr) auto; }
+/* 禁用行：整行置灰不可选（如收款对象暂无收款地址）。整体降透 + 屏蔽点击，行末不放 .li-arrow/.li-check */
+.li-row.disabled { opacity: .4; pointer-events: none; }
+/* 无分割线列表：容器修饰类，去掉内部 li-row 行间线，靠头像 + 留白分组。
+   用于 half-sheet 等留白式选择列表（长列表全是横线时降视觉干扰）。opt-in，不影响默认带线列表 */
+.li-flush > .li-row { border-bottom: none; border-radius: var(--r-10); transition: background-color .15s ease; }
+/* 去线后靠按压高亮补偿可点反馈（替代分割线的行区隔）：静止时行底与 sheet 同色不可见，按下才现圆角高亮块 */
+.li-flush > .li-row:active { background: var(--bg-list); }
+/* 选择列表选中态：行末 ✓（品牌绿），替代导航 chevron 表达"选择而非进入下级"；
+   未选时透明占位保持右列宽度稳定，选中行淡入 ✓ */
+.li-check { color: var(--brand-primary); opacity: 0; flex-shrink: 0; transition: opacity .15s ease; }
+.li-row.selected .li-check { opacity: 1; }
+/* 导航列表指示符：行末常显 ›（弱化色），表达"点此进入下一步"（选择即前进，非勾选停留）。
+   与 .li-check 互斥使用——勾选列表用 .li-check，直达列表用 .li-arrow */
+.li-arrow { color: var(--text-4); flex-shrink: 0; }
+/* 列表加载更多：分页列表底部幽灵按钮（文字 + chevron-down），点击展开下一页，
+   全部加载后 hidden。源自 gas-account 明细列表模式，第二使用方 c2c 出价记录 sheet 后回流 */
+.list-load-more { display: flex; align-items: center; justify-content: center; gap: 4px; margin: var(--sp-10) auto 0; padding: 6px 12px; background: transparent; border: 0; font-size: var(--fs-12); font-weight: 600; color: var(--text-2); cursor: pointer; }
+.list-load-more [data-lucide] { width: 14px; height: 14px; }
+.list-load-more:active { opacity: 0.7; }
+.li-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-1);
+  line-height: 1.3;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.li-title > * { flex-shrink: 0; }
+.li-sub {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.li-aside {
+  text-align: right;
+  font-size: 11px;
+  color: var(--text-3);
+  font-family: var(--font-num);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ============ 资产行 token-row（试行 · gas-account + 转账选币归一）
+   2 行栅格：图标跨两行 ｜ row1 sym + qty ｜ row2 sub(链名)/addr(地址) + usd。
+   .active 选中态品牌色描边。规范站立项后转正；图标尺寸由内容自定（avatar/img 自带）。 ============ */
+.token-row {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  column-gap: var(--sp-12);
+  row-gap: 4px;
+  align-items: center;
+  width: 100%;
+  padding: var(--sp-10) var(--sp-12);
+  border-radius: var(--r-12);
+  background: var(--bg-subtle);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-zh);
+}
+.token-row.active { background: var(--brand-primary-10); border-color: var(--brand-primary); }
+.token-row.active .sym { color: var(--brand-primary); }
+.token-row .token-row-icon,
+.token-row .token-ic { grid-column: 1; grid-row: 1 / span 2; align-self: center; justify-self: start; }
+.token-row .sym { grid-column: 2; grid-row: 1; font-size: 14px; font-weight: 700; color: var(--text-1); line-height: 1.2; min-width: 0; }
+.token-row .qty { grid-column: 3; grid-row: 1; text-align: right; font-family: var(--font-num); font-size: 13px; font-weight: 700; color: var(--text-1); line-height: 1.2; font-variant-numeric: tabular-nums; }
+/* row2 左槽：.sub 链名（ZH 12px）/ .addr 地址（等宽 11px） */
+.token-row .sub,
+.token-row .addr { grid-column: 2; grid-row: 2; font-size: 12px; font-weight: 500; color: var(--text-3); line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.token-row .addr { font-family: var(--font-num); font-size: 11px; }
+.token-row .usd { grid-column: 3; grid-row: 2; text-align: right; font-family: var(--font-num); font-size: 11px; font-weight: 500; color: var(--text-3); line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+/* ============ Tab 栏（swap/行情页归一 · 下划线指示器） ============ */
+.tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  border-bottom: 1px solid var(--border-2);
+}
+.tab {
+  position: relative;
+  border: 0;
+  background: transparent;
+  padding: 0 0 9px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 150ms ease, opacity 150ms ease;
+}
+/* 触碰热区扩展（可见高仅 ~30px）：上下受相邻控件约束各 +4px、左右 +8px（gap 20 内不互相重叠） */
+.tab::before { content: ""; position: absolute; inset: -4px -8px; }
+.tab:active { opacity: .6; }
+.tab.active { color: var(--text-1); }
+.tab.active::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--brand-primary);
+}
+
+/* ============ 分段控件（ucard 页归一 · 胶囊滑块式双态切换） ============ */
+.segmented {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--sp-8);
+  padding: var(--sp-4);
+  border-radius: var(--r-16);
+  background: var(--bg-group);
+}
+.segmented-item {
+  min-height: 44px;
+  border: 0;
+  border-radius: var(--r-12);
+  background: transparent;
+  color: var(--text-2);
+  font-family: var(--font-zh);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .12s ease, color .12s ease;
+}
+.segmented-item.active {
+  background: var(--bg-surface);
+  color: var(--text-1);
+  box-shadow: var(--shadow-2);
+}
+/* 语义色选中态变体（买入/卖出等方向切换）：仅着色选中文字，未选中沿用默认灰 */
+.segmented-item.seg-pos.active { color: var(--success); }
+.segmented-item.seg-neg.active { color: var(--danger); }
+/* 贴合面板顶部的一体化变体（圆角只留上沿，无内衬间隙） */
+.segmented.attached {
+  gap: 0;
+  padding: 0;
+  border-radius: var(--r-16) var(--r-16) 0 0;
+  overflow: hidden;
+}
+.segmented.attached .segmented-item { border-radius: 0; }
+/* 可滚动变体（chip 数可能溢出的筛选场景，如多链选择）：
+   内容宽列 + 横向滚动、藏滚动条；溢出时由 JS 挂 .has-overflow，右缘渐隐提示可滚。
+   mask 用 #000 为 alpha 蒙版（非视觉色值）。 */
+.segmented.scrollable {
+  grid-auto-columns: max-content;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.segmented.scrollable::-webkit-scrollbar { display: none; }
+.segmented.scrollable .segmented-item { padding: 0 var(--sp-14); }
+.segmented.scrollable.has-overflow {
+  -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent);
+}
+
+/* ============ 卡片（swap 页归一 · 圆角 10 与组件层级绑定） ============ */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-10);
+  padding: var(--sp-16);
+}
+.card-title { color: var(--text-2); font-size: 15px; font-weight: 600; line-height: 1; }
+
+/* ============ 信息行（swap 页归一 · 费率/滑点等明细） ============ */
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 13px;
+  min-height: 36px;
+}
+.info-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-2);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.info-label svg, .info-label [data-lucide] { width: 15px; height: 15px; color: var(--text-3); }
+.info-value {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--text-1);
+  font-size: 13px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* 信息行列表容器（卡详情风格 · 18px 行内边距 · value 默认数字字体）
+   用 .info-list 包裹时 .info-row 切换到卡详情节奏，单独使用 .info-row 不受影响。
+   .text-value 显式切回 ZH 字体，用于"正常 / 标准卡"等含中文字符的字段。 */
+.info-list { padding: 6px 0; }
+.info-list > .info-row { padding: 8px 18px; }
+.info-list .info-value { font-family: var(--font-num); }
+.info-value .text-value { font-family: var(--font-zh); }
+
+/* ============ 行情排版（行情页归一 · Inter 数字字体） ============ */
+.price-line { display: flex; align-items: baseline; gap: 10px; }
+.price {
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -.45px;
+  font-family: var(--font-num);
+}
+.price-change { font-size: 14px; line-height: 1; font-weight: 700; font-family: var(--font-num); }
+.price-change.up { color: var(--price-up); }
+.price-change.down { color: var(--price-down); }
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 10px;
+  column-gap: 15px;
+}
+.stat-label { font-size: 12px; line-height: 1; color: var(--text-3); font-weight: 600; margin-bottom: 6px; }
+.stat-value { font-size: 15px; line-height: 1; font-weight: 600; letter-spacing: .05px; font-family: var(--font-num); }
+
+.ranges {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: var(--text-3);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.ranges .active { color: var(--text-1); }
+
+/* ============ 环形操作按钮（swap 页归一 · 含 loading 脉冲环） ============ */
+.fab-circle {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-2);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-2);
+  color: var(--text-2);
+  cursor: pointer;
+}
+.fab-circle:hover { background: var(--brand-primary-10); }
+.fab-circle svg, .fab-circle [data-lucide] { width: 22px; height: 22px; }
+.fab-circle.loading { border-color: transparent; }
+.fab-circle.loading::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg 220deg,
+    rgba(33,193,97,0.25) 250deg, rgba(33,193,97,0.6) 280deg,
+    var(--brand-primary) 300deg 358deg, transparent 360deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  animation: fabPulseRing 1.2s linear infinite;
+  pointer-events: none;
+}
+@keyframes fabPulseRing { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* ============ Half-sheet（规范站 1:1 · 弹窗圆角 14/16 档） ============ */
+.half-sheet {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  max-height: calc(100% - 24px);
+  background: var(--bg-surface);
+  border-top-left-radius: var(--r-16);
+  border-top-right-radius: var(--r-16);
+  z-index: 2;
+  box-shadow: 0 -8px 24px rgba(0,0,0,.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.half-sheet-grabber {
+  width: 36px; height: 4px;
+  background: var(--border-1);
+  border-radius: 2px;
+  margin: 8px auto 0;
+  flex-shrink: 0;
+}
+.half-sheet-header {
+  position: relative;
+  padding: 10px 16px 10px;
+  text-align: center;
+  border-bottom: 0.5px solid var(--border-2);
+  flex-shrink: 0;
+}
+.half-sheet-header.plain { border-bottom: none; padding-bottom: 6px; }
+.half-sheet-title { font-size: 15px; font-weight: 600; color: var(--text-1); letter-spacing: .2px; }
+.half-sheet-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+.half-sheet-close {
+  position: absolute;
+  top: 50%; right: 12px;
+  transform: translateY(-50%);
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--bg-group);
+  color: var(--text-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 0;
+}
+.half-sheet-body { padding: 12px 16px; overflow: auto; flex: 0 1 auto; min-height: 0; }
+.half-sheet-body.flush { padding: 0; }
+/* sheet 内连续通栏按钮间距：主+次叠排（如风险确认 sheet 的「继续前往 / 取消」） */
+.half-sheet-body .btn-block + .btn-block { margin-top: var(--sp-8); }
+
+/* 费率说明 sheet 内容：说明段落 + 数据 row 的间距与配色（统一替代 inline style） */
+.fee-info p { font-size: var(--fs-13); color: var(--text-2); line-height: 1.6; margin: 0 0 var(--sp-12); }
+.fee-info .fee-row { margin-bottom: var(--sp-8); }
+.fee-info .fee-row:last-child { margin-bottom: 0; }
+.fee-info .fee-row > span:first-child { color: var(--text-2); }
+.half-sheet-footer {
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 16px));
+  border-top: 0.5px solid var(--border-2);
+  background: var(--bg-surface);
+  flex-shrink: 0;
+}
+
+/* sheet 内列表行 + 单选 */
+.sheet-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 0.5px solid var(--border-2);
+  cursor: pointer;
+}
+.sheet-list-item:last-child { border-bottom: none; }
+.sheet-list-item.selected .radio { border-color: var(--brand-primary); background: var(--brand-primary); }
+.sheet-list-item.selected .radio::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: #FFFFFF; }
+.sheet-list-item .radio { position: relative; }
+.sheet-list-item .sl-main { flex: 1; min-width: 0; }
+.sheet-list-item .sl-t { font-size: 15px; color: var(--text-1); line-height: 1.35; }
+.sheet-list-item .sl-s { font-size: 12px; color: var(--text-3); margin-top: 2px; line-height: 1.4; }
+
+/* sheet 主操作按钮 / 金额块（规范站 1:1）
+   圆角 r-12 与外层 sheet (r-16) 形成层级，对齐 iOS 17 主 CTA 视觉；
+   RN 端在 iOS 加 borderCurve: 'continuous' 拿 squircle 顺滑过渡 */
+.sheet-primary {
+  display: block;
+  width: 100%;
+  padding: 13px 0;
+  text-align: center;
+  background: var(--brand-primary);
+  color: #fff;
+  border-radius: var(--r-12);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+}
+.sheet-primary:disabled, .sheet-primary.disabled { background: var(--border-1); color: var(--text-3); }
+.sheet-amount { text-align: center; padding: 18px 0 8px; }
+.sheet-amount .cur { font-size: 20px; color: var(--text-1); vertical-align: 6px; margin-right: 2px; }
+.sheet-amount .num { font-size: 40px; font-weight: 600; color: var(--text-1); font-variant-numeric: tabular-nums; letter-spacing: -.5px; }
+.sheet-amount .sub { font-size: 13px; color: var(--text-3); margin-top: 2px; }
+
+/* sheet 选择项（swap 页 drawer-item 归一 · 链/代币选择） */
+.picker-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 14px;
+  width: 100%;
+  text-align: left;
+  border-radius: var(--r-12);
+  margin-bottom: 5px;
+  background: var(--bg-subtle);
+  border: 0;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+.picker-item:hover { background: var(--bg-list); }
+.picker-item.active { background: var(--brand-primary-10); }
+.picker-item.active .picker-item-name { color: var(--brand-primary); font-weight: 600; }
+.picker-item-icon {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex: 0 0 auto;
+  background: var(--bg-list);
+  box-shadow: 0 0 0 1px var(--border-2);
+}
+.picker-item.active .picker-item-icon { box-shadow: 0 0 0 2px var(--brand-primary); }
+.picker-item-icon img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.picker-item-name { font-size: 18px; font-weight: 500; color: var(--text-1); }
+.picker-item-sub { font-size: 13px; color: var(--text-3); margin-top: 3px; }
+
+/* 滑动确认条（perps 页归一 · swipe-to-confirm 防误触主操作，dYdX 移动端验证模式）
+   结构：.slide-confirm > .sc-fill + .sc-label + .sc-thumb；
+   组件层只定视觉，拖拽 JS 在业务稿内实现（pointer events，thumb 拖过 85% 触发）；
+   方向语义变体 .dir-up（买涨·绿）/ .dir-down（买跌·红），默认品牌绿 */
+.slide-confirm {
+  position: relative;
+  height: 52px;
+  border-radius: var(--r-full);
+  background: var(--brand-primary);
+  overflow: hidden;
+  user-select: none;
+  touch-action: none;
+}
+.slide-confirm .sc-fill { position: absolute; top: 0; bottom: 0; left: 0; width: 52px; background: rgba(0,0,0,0.15); border-radius: var(--r-full); }
+.slide-confirm .sc-label { position: absolute; inset: 0; display: grid; place-items: center; font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.55); pointer-events: none; }
+.slide-confirm .sc-label-mask { position: absolute; inset: 0; display: grid; place-items: center; font-size: 15px; font-weight: 600; color: #FFFFFF; pointer-events: none; clip-path: inset(0 100% 0 0); }
+.slide-confirm .sc-thumb {
+  position: absolute; top: 4px; left: 4px;
+  width: 44px; height: 44px;
+  border-radius: var(--r-full);
+  background: #FFFFFF;
+  color: var(--brand-primary);
+  display: grid; place-items: center;
+  box-shadow: var(--shadow-2);
+  cursor: grab;
+}
+.slide-confirm .sc-thumb:active { cursor: grabbing; }
+.slide-confirm.disabled { opacity: .5; pointer-events: none; }
+.slide-confirm.done .sc-fill { background: var(--brand-primary-hover); }
+.slide-confirm.done .sc-thumb { opacity: 0; transition: opacity .15s ease; }
+.slide-confirm.done .sc-label { color: #FFFFFF; font-weight: 600; }
+
+/* ============ 动作表（规范站 1:1） ============ */
+.action-sheet { width: 100%; max-width: 320px; background: transparent; display: flex; flex-direction: column; gap: 8px; }
+.action-sheet-group {
+  background: rgba(246,246,246,0.95);
+  backdrop-filter: blur(24px);
+  border-radius: 14px; /* 弹窗档圆角 */
+  overflow: hidden;
+}
+[data-theme="dark"] .action-sheet-group { background: rgba(35,35,37,0.95); }
+.action-sheet-item {
+  padding: 14px 16px;
+  font-size: 15px;
+  text-align: center;
+  color: var(--info);
+  border-bottom: 0.5px solid var(--border-2);
+  cursor: pointer;
+}
+.action-sheet-item:last-child { border-bottom: none; }
+.action-sheet-item.danger { color: var(--danger); }
+
+/* ============ 弹窗（规范站 1:1） ============ */
+.dialog {
+  width: 100%;
+  max-width: 300px;
+  background: var(--bg-surface);
+  border-radius: var(--r-12);
+  overflow: hidden;
+  box-shadow: 0 20px 40px -12px rgba(0,0,0,.18), 0 2px 8px rgba(0,0,0,.06);
+}
+.dialog-body { padding: 28px 22px 24px; text-align: left; }
+.dialog-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-1);
+  line-height: 1.35;
+  margin-bottom: 10px;
+  letter-spacing: 0.2px;
+  text-align: center;
+}
+.dialog-desc { font-size: 14px; color: var(--text-2); line-height: 1.55; }
+.dialog-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 0.5px solid var(--border-2);
+}
+.dialog-actions.single { grid-template-columns: 1fr; }
+.dialog-action {
+  padding: 14px 0;
+  text-align: center;
+  font-size: 16px;
+  color: var(--text-1);
+  cursor: pointer;
+  user-select: none;
+  font-weight: 400;
+}
+.dialog-action + .dialog-action { border-left: 0.5px solid var(--border-2); }
+.dialog-action.primary { color: var(--brand-primary); font-weight: 500; }
+.dialog-action.cancel { color: var(--text-2); }
+.dialog-action.danger { color: var(--danger); font-weight: 500; }
+.dialog-action:disabled { color: var(--text-3); cursor: not-allowed; }
+
+/* ============ Toast（规范站 1:1 · 双主题通用深底） ============ */
+.toast {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,0,0,0.75);
+  color: #FFFFFF;
+  font-size: 13px;
+  padding: 12px 18px;
+  border-radius: var(--r-8);
+  backdrop-filter: blur(8px);
+}
+
+/* ============ 提示条 warn-ribbon（试行 · usdx-stablecoin 归一）
+   卡内/sheet 内的整段语气提示（风险告知、进行态说明、结果反馈），
+   区别于 .toast（临时浮层）与 .badge（单词级状态标签）。
+   五种语气各自成色，全部走 Token；info / danger 两档因 kit 无对应 bg token，
+   与 .badge.blue-ghost / .red-ghost 同口径用 rgba 字面值。
+   用法：<div class="warn-ribbon"><i data-lucide="alert-triangle"></i><span>文案</span></div>
+   可点变体直接用 <button class="warn-ribbon">。 ============ */
+.warn-ribbon {
+  display: flex; gap: var(--sp-8); align-items: flex-start;
+  padding: var(--sp-10) var(--sp-12);
+  border-radius: var(--r-10);
+  background: var(--warning-bg); color: var(--warning);
+  font-size: var(--fs-12); line-height: 1.5;
+}
+.warn-ribbon i { width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; }
+.warn-ribbon.ok-tone { background: var(--brand-primary-10); color: var(--brand-primary); }
+.warn-ribbon.info-tone { background: rgba(49,136,255,0.1); color: var(--info); }      /* kit 无 info-bg token，与 .badge.blue-ghost 同口径 */
+.warn-ribbon.neutral-tone { background: var(--bg-subtle); color: var(--text-3); }
+.warn-ribbon.danger-tone { background: rgba(225,61,51,0.1); color: var(--danger); }    /* 同 .badge.red-ghost 口径 */
+.warn-ribbon b { font-weight: 600; }
+button.warn-ribbon { width: 100%; text-align: left; border: 0; font-family: var(--font-zh); cursor: pointer; }
+button.warn-ribbon:active { opacity: .75; }
+
+/* ============ 手机壳（mobile 设计稿统一外壳 · 硬件配色为字面值非主题）
+   尺寸按 iPhone 15 真机换算（1pt ≈ 0.164mm，机身 71.6×147.6mm → 437×896px）：
+   边框 22px · 屏幕圆角 55（官方值）· 机身圆角 77 · 灵动岛 126×37 顶部内缩 11 ============ */
+.phone-shell {
+  position: relative;
+  width: 437px;            /* 393 屏幕 + 22px 边框 ×2 */
+  padding: 22px;
+  border-radius: 77px;     /* 屏幕圆角 55 + 边框 22，保持同心 */
+  background: #111114;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.10),
+    0 0 0 2px rgba(0,0,0,.55),
+    0 24px 64px rgba(0,0,0,.28);
+  flex: 0 0 auto;
+}
+/* 左侧键组：静音 33 + 音量 ×2 各 65（真机 5.5 / 11mm 换算），渐变分段绘制 */
+.phone-shell::before {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: 176px;
+  width: 3px;
+  height: 201px;
+  border-radius: 2px;
+  background: linear-gradient(
+    #232326 0 33px,  transparent 33px 52px,
+    #232326 52px 117px, transparent 117px 136px,
+    #232326 136px 201px);
+}
+/* 右侧电源键：真机约 16.5mm ≈ 100px */
+.phone-shell::after {
+  content: "";
+  position: absolute;
+  right: -3px;
+  top: 268px;
+  width: 3px;
+  height: 100px;
+  border-radius: 2px;
+  background: #232326;
+}
+.phone-screen {
+  position: relative;
+  width: 393px;
+  height: 852px;
+  border-radius: 55px;     /* iPhone 14 Pro/15 屏幕圆角官方值 55pt */
+  overflow: hidden;
+  background: var(--bg-page);
+  display: flex;
+  flex-direction: column;
+}
+/* 灵动岛：126×37pt，顶部内缩 11pt（画在屏幕层，叠于内容之上） */
+.phone-screen::before {
+  content: "";
+  position: absolute;
+  z-index: 30;
+  left: 50%;
+  top: 11px;
+  width: 126px;
+  height: 37px;
+  transform: translateX(-50%);
+  background: #050506;
+  border-radius: var(--r-full);
+  pointer-events: none;
+}
+
+/* ============ Mobile 设备脚手架（393×852 画布 · _template 配套） ============ */
+.status-bar {
+  height: 54px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 var(--sp-24) var(--sp-10);
+  font-family: var(--font-num);
+  font-size: 15px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.status-bar .icons { display: flex; gap: var(--sp-6); align-items: center; }
+.status-bar .icons svg, .status-bar .icons [data-lucide] { width: 16px; height: 16px; }
+
+.nav-bar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--sp-8);
+  flex-shrink: 0;
+}
+.nav-bar .nav-side {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-1);
+  border: 0; background: transparent; cursor: pointer;
+}
+.nav-bar .nav-side svg, .nav-bar .nav-side [data-lucide] { width: 24px; height: 24px; }
+/* 导航栏文字动作（U 卡「帮助」、卡券「记录」等；与图标槽互斥） */
+.nav-bar .nav-side.text {
+  width: auto;
+  min-width: 36px;
+  padding: 0 var(--sp-4);
+  font-family: var(--font-zh);
+  font-size: var(--fs-15);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.nav-bar .nav-side.text:active { opacity: 0.6; }
+.nav-bar .nav-title {
+  flex: 1;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-4);
+}
+/* 左标题变体：左返回 + 左对齐标题（行情屏用）；默认 nav-bar 仍为居中标题 */
+.nav-bar--left .nav-title { justify-content: flex-start; text-align: left; }
+
+.screen-content { flex: 1; min-height: 0; overflow: hidden; }
+
+.home-indicator {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.home-indicator::after {
+  content: '';
+  width: 134px; height: 5px; /* iOS 官方 134×5pt */
+  border-radius: var(--r-full);
+  background: var(--text-1);
+}
+
+/* === Promo Swiper — 横滑活动卡组 === */
+
+.promo-section {
+  margin-top: var(--sp-22);
+}
+
+.promo-title {
+  margin-bottom: var(--sp-8);
+  color: var(--text-2);
+  font-size: var(--fs-12);
+}
+
+.promo-swiper {
+  display: flex;
+  gap: var(--sp-10);
+  margin: 0 calc(-1 * var(--sp-18));
+  padding: var(--sp-4) var(--sp-30);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.promo-swiper::-webkit-scrollbar {
+  display: none;
+}
+
+.promo-card {
+  flex: 0 0 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-12);
+  padding: var(--sp-14) var(--sp-16);
+  border-radius: var(--r-16);
+  background: var(--ucard-glass-surface);
+  box-shadow: var(--ucard-inner-glow);
+  scroll-snap-align: center;
+  cursor: pointer;
+  transition: transform 180ms ease;
+}
+
+/* 卡面级按下反馈：整张活动卡可点 → 保留 scale 作为"这是卡片不是按钮"的语义提示
+   （按钮级 :active 已统一为 opacity 0.7，参见 .btn / .btn-glass） */
+.promo-card:active { transform: scale(0.98); }
+
+.promo-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.promo-card-title {
+  font-size: var(--fs-14);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.promo-card-sub {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-11);
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.promo-dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-6);
+  margin-top: var(--sp-8);
+}
+
+.promo-dot {
+  width: var(--sp-4);
+  height: var(--sp-4);
+  border-radius: 50%;
+  background: var(--border-3);
+  transition: background 180ms ease;
+}
+
+.promo-dot.active {
+  background: var(--brand-primary);
+}
+
+/* === Empty State — 空白欢迎引导 === */
+
+.home-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-40) var(--sp-18);
+  text-align: center;
+  min-height: 420px;
+}
+
+.home-empty[hidden] {
+  display: none;
+}
+
+/* 紧凑变体：列表内嵌空态（如账户详情卡列表为空） */
+.home-empty.compact { padding: var(--sp-30) var(--sp-18); min-height: auto; }
+.home-empty.compact .empty-illustration { width: 64px; height: 64px; margin-bottom: var(--sp-12); }
+.home-empty.compact .empty-illustration i { width: 28px; height: 28px; }
+.home-empty.compact .empty-desc { font-size: var(--fs-13); color: var(--text-3); margin: 0; }
+
+/* 行内空态文字提示（列表/卡片内"暂无 XX"等单行 fallback） */
+.empty-hint { text-align: center; color: var(--text-2); font-size: var(--fs-13); padding: var(--sp-24) 0; }
+
+.empty-illustration {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg-list);
+  margin-bottom: var(--sp-24);
+}
+
+.empty-illustration i {
+  width: 48px;
+  height: 48px;
+  color: var(--text-3);
+}
+
+.empty-heading {
+  font-size: var(--fs-17);
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: var(--sp-8);
+}
+
+.empty-desc {
+  font-size: var(--fs-13);
+  color: var(--text-3);
+  line-height: 1.5;
+  max-width: 260px;
+  margin-bottom: var(--sp-30);
+}
+
+/* ============ H5 形态修饰（作用域 .h5-form · 试行 · usdx-stablecoin H5 稿归一）============
+   H5 网页形态下圆角降到 8px 档，对齐 DeBox H5 现网风格（dbtcoin.com）。
+   容器加 class="h5-form" 后对内部组件生效，mobile/ APP 稿不受影响。
+   这是形态级修饰，不是组件变体——不要在稿内后置覆写组件圆角，一律走这里。 */
+.h5-form .card {
+  border-radius: var(--r-8);
+}
+
+.h5-form .half-sheet {
+  border-top-left-radius: var(--r-8);
+  border-top-right-radius: var(--r-8);
+}

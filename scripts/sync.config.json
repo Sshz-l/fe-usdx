@@ -1,0 +1,15 @@
+{
+  "source": "../fe-interface",
+  "owned": [
+    "src/pages/**",
+    "src/locale/**",
+    "src/connectors/index.tsx",
+    "src/components/Modal/LoginModal.tsx",
+    "fe-common/chakra-components/src/Modal/ConnectWalletMulti.tsx",
+    "src/constants/usdxConfig.test.js",
+    "src/hooks/useLinguiInit.test.js",
+    "src/utils/usdx/sharedAssets.test.js"
+  ],
+  "extraEntries": ["src/utils/usdx/usdxMessages.ts"],
+  "publicAssets": ["usdx", "favicon.ico", "images/apple-icon-144x144.png"]
+}

@@ -1,0 +1,1460 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2023-08-16 14:55+0800\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/hooks/useUsdxActivityData.ts
+msgid "Activity records failed to load"
+msgstr "活动记录读取失败"
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+msgid "Disconnect"
+msgstr "断开连接"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "<0>0.5% → 0.1%</0>, decreases linearly over 24 hours while queued."
+msgstr "<0>0.5% → 0.1%</0>，按挂单时长 24 小时线性递减。"
+
+#: src/hooks/useUsdxClaimSellerAction.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "USDT claimed"
+msgstr "USDT 已领取"
+
+#: src/hooks/useOSS.ts
+#: src/hooks/useOSS.ts
+msgid "File is required"
+msgstr "请上传图片"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Minting…"
+msgstr "铸造中…"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Fully released on"
+msgstr "释放完毕日期"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Minting paused"
+msgstr "铸造已暂停"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Quoting…"
+msgstr "报价中…"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Failed to fetch quote, please try again"
+msgstr "报价读取失败，请稍后重试"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMine.tsx
+msgid "My release plans"
+msgstr "我的释放计划"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Please refresh and retry"
+msgstr "请刷新后重试"
+
+#: src/components/QRCodeLogin/ConnectWalletQRCode.tsx
+msgid "QR code expired, please refresh"
+msgstr "二维码已过期，请刷新"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Exit path"
+msgstr "退出方式"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Claimed {amount} USDX"
+msgstr "已领取 {amount} USDX"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Insufficient USDX balance, max redeem {0}"
+msgstr "USDX 余额不足，最多可赎回 {0}"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Open"
+msgstr "挂单中"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Days elapsed"
+msgstr "已过天数"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Restrictions"
+msgstr "限制"
+
+#: src/hooks/useUsdxFaucetClaim.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "On-chain client unavailable"
+msgstr "链上客户端不可用"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Free"
+msgstr "免费"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Insufficient BOX balance, max {0}"
+msgstr "BOX 余额不足，最多 {0}"
+
+#: src/components/Usdx/UsdxMine.tsx
+msgid "View USDX contract"
+msgstr "查看 USDX 合约"
+
+#: src/components/Usdx/UsdxQueueSheet.tsx
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Cancelling…"
+msgstr "取消中…"
+
+#: src/components/Usdx/UsdxApp.tsx
+msgid "Disconnected from wallet"
+msgstr "已断开连接"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Fee details"
+msgstr "手续费说明"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Redeem successful"
+msgstr "赎回成功"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Pay"
+msgstr "支付"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Failed to read protocol status, please refresh"
+msgstr "协议状态读取失败，请刷新后重试"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMine.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Pending unlock"
+msgstr "待解锁"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Sign again"
+msgstr "请重新签名"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Mint"
+msgstr "铸造"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "<0>1.2×</0> credit, all pending unlock (nothing credited at mint); released at 0.3% daily over 334 days, must <1>actively claim</1>. Locked amount cannot be transferred or redeemed."
+msgstr "<0>1.2 倍</0>额度：全部记为待解锁（铸造时不到账），每日 0.3%，334 天释放完，需<1>主动领取</1>。锁仓不可转、不可赎。"
+
+#: src/hooks/useUsdxMintAction.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Invalid signature, please retry the swap"
+msgstr "授权签名无效，请重新发起兑换"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Reading protocol status…"
+msgstr "正在读取协议状态…"
+
+#: src/components/Usdx/UsdxActivity.tsx
+msgid "Failed to load records"
+msgstr "记录读取失败"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Releasing batches"
+msgstr "释放中批次"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Earlier"
+msgstr "更早"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Waiting for previous step"
+msgstr "待前序完成"
+
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+msgid "Wallet or config unavailable"
+msgstr "钱包或配置不可用"
+
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+msgid "Minting unavailable, please refresh the quote"
+msgstr "当前不可铸造，请刷新报价"
+
+#: src/components/Usdx/UsdxActivity.tsx
+msgid "All records loaded"
+msgstr "已经全部加载完毕"
+
+#: src/utils/request.ts
+msgid "Invalid login credentials, please login again [-2023]"
+msgstr "登录凭证无效,请重新登录 [-2023]"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Treasury <0>70%</0> · permanently locked LP <1>20%</1> · remaining 10%."
+msgstr "国库 <0>70%</0> · 永锁 LP <1>20%</1> · 其余 10%。"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "No action needed"
+msgstr "无需处理"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "No credit at mint: the amount is recorded as pending unlock and released daily"
+msgstr "铸造时不到账：额度记为待解锁，每日释放"
+
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxContractSheet.tsx
+msgid "BNB Smart Chain"
+msgstr "BNB Smart Chain"
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+#: src/components/Usdx/UsdxContractSheet.tsx
+msgid "Copied"
+msgstr "已复制"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMine.tsx
+#: src/components/Usdx/UsdxQueueSheet.tsx
+msgid "Retry"
+msgstr "重试"
+
+#: src/components/Usdx/UsdxApp.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Switch Network"
+msgstr "切换网络"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Claim all"
+msgstr "全部领取"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Sell settled"
+msgstr "卖出兑付"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Proceeds"
+msgstr "所得"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Failed to read USDT balance, please refresh and retry"
+msgstr "USDT 余额读取失败，请刷新后重试"
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "You receive"
+msgstr "你获得"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Mint premium"
+msgstr "铸造溢价"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Buy USDX"
+msgstr "买入 USDX"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Treasury TVL"
+msgstr "国库TVL"
+
+#: src/components/Usdx/UsdxApp.tsx
+msgid "Connected {0}, open account"
+msgstr "已连接 {0}，点击查看账户"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "333 equal days, remainder on day 334, 100% in total."
+msgstr "333 天等额释放，第 334 天释放尾差，合计 100%。"
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+#: src/components/Usdx/UsdxContractSheet.tsx
+msgid "Copy failed"
+msgstr "复制失败"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Total value"
+msgstr "总价值"
+
+#: src/components/Usdx/UsdxContractSheet.tsx
+#: src/components/Usdx/UsdxMine.tsx
+msgid "USDX contract"
+msgstr "USDX 合约"
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "You will receive"
+msgstr "你将获得"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "<b>Redeemed at face value</b>, 1 USDX counts as 1 USDT."
+msgstr "<b>按面值兑付</b>，1 USDX 记 1 USDT 价值。"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "BOX mark price unavailable; redeem by share × 99.5%"
+msgstr "当前取不到 BOX 标记价，按份额 × 99.5% 兜底兑付"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Deposit amount (USDT)"
+msgstr "投入金额（USDT）"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "{0} batches"
+msgstr "{0} 笔"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Fixed <0>0.5%</0>, instant (requires sufficient reserve)."
+msgstr "固定 <0>0.5%</0>，即时（需储备足额）。"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Insufficient {token} balance, max {amount}"
+msgstr "{token} 余额不足，最多可兑换 {amount}"
+
+#: src/hooks/useUsdxPositions.ts
+#: src/hooks/useUsdxPositions.ts
+msgid "Position read failed"
+msgstr "仓位读取失败"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Discount mode"
+msgstr "折价模式"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Processing…"
+msgstr "交易中"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "0.3% released daily; <0>actively claim</0> to mint as USDX."
+msgstr "每日释放 0.3%，<0>主动领取</0>后铸造为 USDX。"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Reading pay-token balances…"
+msgstr "正在读取支付代币余额…"
+
+#: src/components/Usdx/UsdxMine.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Redeem USDX"
+msgstr "赎回 USDX"
+
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Connect Wallet"
+msgstr "连接钱包"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "USDT → USDX <0>free</0>, instant."
+msgstr "USDT → USDX <0>免费</0>，即时。"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Released {0}"
+msgstr "已释放 {0}"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Instant"
+msgstr "即时到账"
+
+#: src/components/Usdx/UsdxActivity.tsx
+msgid "Activity filters"
+msgstr "动态分类"
+
+#: src/hooks/useDeBoxDirectConnect.ts
+#: src/hooks/useDeBoxDirectConnect.ts
+msgid "No injected wallet detected"
+msgstr "未检测到注入钱包"
+
+#: src/hooks/useUsdxFaucetClaim.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Faucet is unavailable in this environment"
+msgstr "当前环境不可领取测试币"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Done"
+msgstr "操作已完成"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Confirm redeem"
+msgstr "确认赎回"
+
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxMine.tsx
+msgid "My"
+msgstr "我的"
+
+#: src/components/Usdx/UsdxMine.tsx
+msgid "Failed to load activity"
+msgstr "活动记录读取失败"
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+msgid "Mint failed, please try again"
+msgstr "铸造失败，请稍后重试"
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+#: src/components/Usdx/UsdxContractSheet.tsx
+msgid "Copy address"
+msgstr "复制地址"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Filled amount"
+msgstr "已成交"
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+msgid "Claiming tUSDT…"
+msgstr "正在领取 tUSDT…"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "BOX price changed. Sign again to mint with the latest quote."
+msgstr "BOX 价格已变化，请重新签名后再铸造"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Contribution"
+msgstr "投入"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Claim failed, please try again"
+msgstr "领取失败，请稍后重试"
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+msgid "Claim {USDX_FAUCET_CLAIM_USDT_LABEL} tUSDT + {USDX_FAUCET_CLAIM_BOX_LABEL} tBox"
+msgstr "领取 {USDX_FAUCET_CLAIM_USDT_LABEL} tUSDT + {USDX_FAUCET_CLAIM_BOX_LABEL} tBox"
+
+#: src/components/Usdx/UsdxQueueSheet.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "My open orders"
+msgstr "我的挂单"
+
+#: src/hooks/useUsdxWallet.ts
+msgid "Failed to switch network"
+msgstr "切换网络失败"
+
+#: src/components/Usdx/UsdxActivity.tsx
+msgid "My USDX activity"
+msgstr "我的 USDX 记录"
+
+#: src/hooks/useDeBoxDirectConnect.ts
+msgid "Connection failed"
+msgstr "连接失败"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Scan to connect any wallet"
+msgstr "扫码连接任意钱包"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Minimum sell is 1 USDX"
+msgstr "最低卖出 1 USDX"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Full aggregate failed; showing loaded batches"
+msgstr "全部汇总失败，仅展示已加载批次"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Signing Permit2…"
+msgstr "Permit2 签署中…"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Insufficient liquidity, try a smaller amount"
+msgstr "流动性不足，请减小金额后重试"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Minimum deposit is 1 USDT"
+msgstr "投入金额不低于 1 USDT"
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+msgid "Claiming tBox…"
+msgstr "正在领取 tBox…"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "How daily release is calculated"
+msgstr "每日释放怎么算"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Nothing to claim"
+msgstr "暂无可领取额度"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Order cancelled"
+msgstr "已取消挂单"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "USDT and BOX <0>50% each</0>, converted at the 24h average."
+msgstr "USDT 与 BOX <0>各 50%</0>，按 24 小时均价折算。"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "About release rules"
+msgstr "关于释放规则"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Daily release total"
+msgstr "每日释放合计"
+
+#: src/components/Usdx/UsdxApp.tsx
+msgid "Main navigation"
+msgstr "主导航"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Minimum received"
+msgstr "至少收到"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Insufficient USDX liquidity, buying unavailable"
+msgstr "USDX 可兑不足，暂不可买入"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Settlement"
+msgstr "兑付方式"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Sell via the swap pool or redeem from the treasury."
+msgstr "兑换池卖出或从国库赎回。"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Redeem failed, please try again"
+msgstr "赎回失败，请稍后重试"
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/hooks/useUsdxCancelSellAction.ts
+#: src/hooks/useUsdxClaimAction.ts
+#: src/hooks/useUsdxClaimSellerAction.ts
+#: src/hooks/useUsdxFaucetClaim.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxRedeemAction.ts
+#: src/hooks/useUsdxRedeemAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+#: src/hooks/useUsdxWallet.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Please switch to BNB Smart Chain"
+msgstr "请切换到 BNB Smart Chain"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Total released"
+msgstr "累计已释放"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Claim successful"
+msgstr "领取成功"
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+msgid "USDX balance"
+msgstr "USDX 余额"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Insufficient {token} liquidity, max {amount}"
+msgstr "{token} 可兑不足，最多可兑换 {amount}"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "{0} days left"
+msgstr "还有 {0} 天"
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+msgid "Block explorer"
+msgstr "区块浏览器"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Finish"
+msgstr "完成"
+
+#: src/components/Usdx/UsdxMine.tsx
+msgid "Wallet balance"
+msgstr "钱包余额"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "BOX mark price is unavailable, minting paused"
+msgstr "BOX 标记价暂时取不到，铸造暂不可用"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Confirmed"
+msgstr "已确认"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Approving BOX…"
+msgstr "授权 BOX 中…"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "USDX is fully burned; the treasury pays equivalent <0>USDT + BOX</0>."
+msgstr "USDX 全额销毁，从国库发放等值 <0>USDT + BOX</0>。"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Reading sell quote…"
+msgstr "正在读取卖出报价…"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Minting is unavailable, please try again later"
+msgstr "当前协议不可铸造，请稍后再试"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Time"
+msgstr "时间"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Mint date"
+msgstr "铸造日期"
+
+#: src/components/Usdx/UsdxMine.tsx
+msgid "Recent activity"
+msgstr "最近动态"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Payout"
+msgstr "兑付"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Submitting…"
+msgstr "提交中"
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Test tokens received"
+msgstr "测试币已到账"
+
+#: src/utils/request.ts
+#: src/utils/request.ts
+msgid "Token expired, please login again"
+msgstr "登录凭证已过期，请重新登录"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxMine.tsx
+msgid "All"
+msgstr "全部"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Release rules"
+msgstr "释放规则"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Sell order"
+msgstr "卖出挂单"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Period"
+msgstr "周期"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Please enter a valid amount"
+msgstr "请输入有效金额"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Multiple mints"
+msgstr "多笔铸造"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Stabilizer paused, swap unavailable"
+msgstr "稳定器已暂停，暂不可兑换"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Days remaining"
+msgstr "剩余天数"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Submit order"
+msgstr "提交挂单"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Cannot transfer, redeem, or cash out early."
+msgstr "不可转、不可赎、不可提前变现。"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Where deposits go"
+msgstr "入金去向"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Failed to read sell quote, please refresh and retry"
+msgstr "卖出报价读取失败，请刷新后重试"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Nature"
+msgstr "本质"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Fee"
+msgstr "手续费"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Cancel & re-queue"
+msgstr "取消重挂"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Signed"
+msgstr "已签名"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Waiting for wallet confirmation…"
+msgstr "等待钱包确认…"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxMine.tsx
+#: src/components/Usdx/UsdxQueueSheet.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Loading…"
+msgstr "加载中…"
+
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Reading status…"
+msgstr "正在读取状态…"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Swap failed, please try again"
+msgstr "兑换失败，请稍后重试"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Daily release"
+msgstr "每日释放"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Treasury can redeem 1:1"
+msgstr "国库足以 1:1 兑付"
+
+#: src/hooks/useUsdxMintAction.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Request timed out, please retry"
+msgstr "请求超时，请重试"
+
+#: src/hooks/useOSS.ts
+msgid "The file size should be less than {0}MB."
+msgstr "文件大小应小于 {0}MB。"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "{0} days"
+msgstr "{0} 天"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Fully released"
+msgstr "已释放完毕"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Switch swap direction"
+msgstr "切换兑换方向"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "This mint"
+msgstr "本笔铸造"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "#{0}　Mint {1} USDX"
+msgstr "#{0}　铸造 {1} USDX"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Approve USDT for Permit2"
+msgstr "授权 USDT 给 Permit2"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Mint batch not found"
+msgstr "未找到该铸造批次"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Checking…"
+msgstr "检查中…"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Sell · open order"
+msgstr "卖出 · 挂单"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Failed, please retry"
+msgstr "失败，请重试"
+
+#: src/components/QRCodeLogin/components/QRCodeStatus.tsx
+msgid "Please confirm on your phone"
+msgstr "请在手机上确认"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Too many decimals, please reduce by one digit"
+msgstr "金额精度过高，请减少一位小数"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Credit details"
+msgstr "额度明细"
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+msgid "Test tokens"
+msgstr "测试币领取"
+
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Claim USDT"
+msgstr "领取 USDT"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMine.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Claimable"
+msgstr "可领取"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Failed to read stabilizer status, please refresh and retry"
+msgstr "稳定器状态读取失败，请刷新后重试"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "{days} days"
+msgstr "{days} 天"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Switch to BNB Smart Chain to view USDX assets"
+msgstr "请切换到 BNB Smart Chain 查看你的 USDX 资产"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Permit2 signature for USDT and BOX"
+msgstr "Permit2 签署授权 USDT 和 BOX"
+
+#: src/components/Usdx/UsdxQueueSheet.tsx
+msgid "No open orders"
+msgstr "暂无挂单记录"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "{amount} USDX · {count} orders"
+msgstr "{amount} USDX · {count} 笔"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Redeem"
+msgstr "赎回"
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Claiming…"
+msgstr "领取中…"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Re-queued orders restart from 0.5%."
+msgstr "重挂费率从 0.5% 重新起算。"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Connect your wallet to view USDX assets"
+msgstr "连接钱包后查看你的 USDX 资产"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Confirm mint"
+msgstr "确认铸造"
+
+#: src/components/Usdx/UsdxActivity.tsx
+msgid "Activity history"
+msgstr "历史记录"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Activity"
+msgstr "动态"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Swap liquidity"
+msgstr "兑换流动性"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Order placed, will settle {amount} USDT"
+msgstr "已挂单，将逐笔兑付 {amount} USDT"
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "What is pending unlock"
+msgstr "什么是待解锁"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Sell USDX"
+msgstr "卖出 USDX"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "You redeem"
+msgstr "你赎回"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Waiting to retry"
+msgstr "待重试"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Browser extension / mobile app"
+msgstr "浏览器插件 / 移动端 App"
+
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxApp.tsx
+msgid "Unsupported network, switch to BNB Smart Chain"
+msgstr "当前网络不支持，请切换到 BNB Smart Chain"
+
+#: src/components/QRCodeLogin/components/CountdownTimer.tsx
+msgid "Cancel authorization"
+msgstr "取消授权"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Redeem fee"
+msgstr "赎回费"
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "About minting"
+msgstr "关于铸造"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "USDX amount to redeem"
+msgstr "赎回 USDX 数量"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Claiming paused"
+msgstr "领取已暂停"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Price"
+msgstr "价格"
+
+#: src/components/Modal/LoginModal.tsx
+msgid "SCAN"
+msgstr "扫码"
+
+#: src/components/Usdx/UsdxMine.tsx
+msgid "My USDX"
+msgstr "我的 USDX"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "USDX minting is not enabled in this environment"
+msgstr "当前环境未启用 USDX 铸造"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Treasury is below face-value liabilities; redeem at NAV"
+msgstr "国库低于面值负债，赎回按净值等比兑付"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Time progress"
+msgstr "时间进度"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Insufficient USDT balance, max {0}"
+msgstr "USDT 余额不足，最多 {0}"
+
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxRedeemAction.ts
+#: src/hooks/useUsdxRedeemAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+msgid "USDX config or client unavailable"
+msgstr "USDX 配置或客户端不可用"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Total deposit value"
+msgstr "总投入价值"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Queue head is {queue} USDX; this swap of {requested} USDT cannot fill a whole order. Use the queue-head amount."
+msgstr "当前队首挂单为 {queue} USDX，本次兑换 {requested} USDT 无法整单成交，请按队首金额兑换"
+
+#: src/components/Usdx/UsdxQueueSheet.tsx
+msgid "Cancel"
+msgstr "取消"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Open this page from a release plan or mint record"
+msgstr "请从释放计划或铸造记录进入本页"
+
+#: src/components/Usdx/UsdxApp.tsx
+msgid "Disconnect failed"
+msgstr "断开失败"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Redeem ratio"
+msgstr "赎回比例"
+
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxRedeemAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Enter a valid amount"
+msgstr "请输入有效金额"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Today"
+msgstr "今天"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Released —"
+msgstr "已释放 —"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Failed to read protocol status"
+msgstr "协议状态读取失败"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Failed to read {0} balance, please refresh and retry"
+msgstr "{0} 余额读取失败，请刷新后重试"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Failed to load"
+msgstr "加载失败"
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+msgid "My wallet"
+msgstr "我的钱包"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Deposit amount"
+msgstr "投入金额"
+
+#: src/components/Usdx/UsdxActivity.tsx
+msgid "No activity in this category"
+msgstr "该分类下暂无动态"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "More info"
+msgstr "更多信息"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Day {elapsed} / {totalDays}"
+msgstr "第 {elapsed} / {totalDays} 天"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Redeeming paused"
+msgstr "赎回已暂停"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Redeemed {usdt} USDT and {box} BOX"
+msgstr "赎回成功，已收到 {usdt} USDT 和 {box} BOX"
+
+#: src/hooks/useUsdxCancelSellAction.ts
+#: src/hooks/useUsdxCancelSellAction.ts
+msgid "Order read failed"
+msgstr "挂单读取失败"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Claim"
+msgstr "领取"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "BOX price changed"
+msgstr "BOX 价格已变化"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "#{0} mint details"
+msgstr "#{0} 铸造详情"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Back"
+msgstr "返回"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "About redeeming"
+msgstr "关于赎回"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Reading stabilizer status…"
+msgstr "正在读取稳定器状态…"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "You deposit"
+msgstr "你投入"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Approving USDT…"
+msgstr "授权 USDT 中…"
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+msgid "Connect wallet to claim"
+msgstr "连接钱包并领取"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "<b>BOX mark price unavailable</b>; paid by share × 99.5%. Redeeming is <b>not paused</b>."
+msgstr "<b>取不到 BOX 标记价</b>，按份额 × 99.5% 发放，赎回<b>不暂停</b>。"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "{dir} · {pay} → {recv}"
+msgstr "{dir} · {pay} → {recv}"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Preparing transaction…"
+msgstr "准备交易…"
+
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Record not found"
+msgstr "未找到该记录"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Confirming…"
+msgstr "确认中…"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Reading {0} balance…"
+msgstr "正在读取{0}余额…"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Failed to load positions"
+msgstr "仓位加载失败"
+
+#: src/components/QRCodeLogin/components/QRCodeStatus.tsx
+msgid "Refresh"
+msgstr "刷新"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Receive"
+msgstr "收到"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Mint successful, {lockText} USDX credit registered as pending unlock"
+msgstr "铸造成功，{lockText} USDX 额度已登记待解锁"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Approve BOX for Permit2"
+msgstr "授权 BOX 给 Permit2"
+
+#: src/utils/request.ts
+msgid "Your account has logged in on another device, please login again [-2018]"
+msgstr "您的账号已在其他设备登录,请重新登录 [-2018]"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Cancelled in wallet"
+msgstr "已在钱包取消"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Market orders"
+msgstr "市场挂单"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Buying"
+msgstr "买入"
+
+#: src/components/QRCodeLogin/ConnectWalletQRCode.tsx
+msgid "Scan to log in to DeBox"
+msgstr "扫码登录 DeBox"
+
+#: src/hooks/useUsdxCancelSellAction.ts
+#: src/hooks/useUsdxClaimAction.ts
+#: src/hooks/useUsdxClaimAction.ts
+#: src/hooks/useUsdxClaimAction.ts
+#: src/hooks/useUsdxClaimSellerAction.ts
+#: src/hooks/useUsdxFaucetClaim.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "USDX config missing"
+msgstr "USDX 配置缺失"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Failed to fetch redeem quote, please try again"
+msgstr "赎回报价读取失败，请稍后重试"
+
+#: src/components/Usdx/UsdxQueueSheet.tsx
+msgid "Filled {0}"
+msgstr "已成交 {0}"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Cancel failed, please try again"
+msgstr "取消失败，请稍后重试"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "When the treasury is short, pay <0>pro rata at NAV</0>, same 0.5% redeem fee. The discount factor makes your proceeds below your share, so remaining USDX backing thickens."
+msgstr "国库不足时，按<0>净值等比</0>兑付，赎回费同为 0.5%。折价系数使实得比例低于持仓份额，剩余 USDX 的背书相应增厚。"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Reading stabilizer inventory…"
+msgstr "正在读取稳定器库存…"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Buy"
+msgstr "买"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Failed to read inventory, please refresh and retry"
+msgstr "库存读取失败，请刷新后重试"
+
+#: src/utils/usdx/usdxMessages.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Completed"
+msgstr "已成交"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Pay amount"
+msgstr "支付数量"
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+#: src/hooks/useUsdxFaucetClaim.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Failed to claim test tokens, please try again"
+msgstr "领取测试币失败，请稍后重试"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "On-contract <0>accounting equity</0>, not yet minted as USDX; it will not show in the wallet."
+msgstr "合约里的<0>记账权益</0>，尚未铸造为 USDX，钱包查不到。"
+
+#: src/components/Usdx/UsdxMine.tsx
+msgid "{0} Claimable"
+msgstr "{0} 可领取"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Minimum buy is 0.01 USDT"
+msgstr "最低买入 0.01 USDT"
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Wallet"
+msgstr "钱包"
+
+#: src/hooks/useUsdxSwapSellAction.ts
+msgid "Failed to submit swap, please try again"
+msgstr "提交兑换失败，请稍后重试"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "When the treasury can cover face value, redeem at <0>1:1 face value</0> with a 0.5% redeem fee."
+msgstr "国库足以覆盖面值时，按 <0>1:1 面值</0>兑付，收 0.5% 赎回费。"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Swap successful, received {amount} USDX"
+msgstr "兑换成功，收到 {amount} USDX"
+
+#: src/components/Usdx/UsdxSwapDetail.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Cancel order"
+msgstr "取消挂单"
+
+#: src/components/Usdx/UsdxQueueSheet.tsx
+msgid "Failed to load open orders, please refresh and retry"
+msgstr "挂单加载失败，请刷新后重试"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Failed to read USDX balance, please refresh and retry"
+msgstr "USDX 余额读取失败，请刷新后重试"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Daily {0}"
+msgstr "每日 {0}"
+
+#: src/components/Usdx/UsdxContractSheet.tsx
+msgid "View on BscScan"
+msgstr "在 BscScan 查看"
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/hooks/useUsdxCancelSellAction.ts
+#: src/hooks/useUsdxClaimAction.ts
+#: src/hooks/useUsdxClaimSellerAction.ts
+#: src/hooks/useUsdxFaucetClaim.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxRedeemAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Please connect your wallet"
+msgstr "请先连接钱包"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Pay ratio"
+msgstr "支付比例"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "{0} USDX / day"
+msgstr "{0} USDX / 天"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Treasury is below face value, <b>redeem pro rata at NAV</b>"
+msgstr "国库低于面值，<b>按净值等比兑付</b>"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "No valid price; showing quantity only, no valuation."
+msgstr "无有效价格，只显示数量、不做估值。"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Swap"
+msgstr "兑换"
+
+#: src/components/Usdx/UsdxPlan.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Release plan details"
+msgstr "释放计划详情"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "No release plans yet"
+msgstr "还没有释放计划"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Recommended · in-app connect"
+msgstr "推荐 · 应用内直连"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Redeem amount"
+msgstr "赎回数量"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Cancelled"
+msgstr "注销"
+
+#: src/hooks/useUsdxClaimSellerAction.ts
+msgid "USDT claimed {label}"
+msgstr "USDT 已领取 {label}"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Waiting for wallet signature…"
+msgstr "等待钱包签名…"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Open order (FIFO, not instant)"
+msgstr "挂单（FIFO，非即时）"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Sell · instant fill"
+msgstr "卖出 · 直接成交"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Each mint is independent; amounts due but unclaimed <0>are not voided</0>."
+msgstr "各笔独立计算，到期未领取部分<0>不会作废</0>。"
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+msgid "BSC TEST pays with <0>tUSDT</0> / <1>tBox</1>; pricing still uses the real BOX/USDT TWAP. Do not confuse them with mainnet tokens."
+msgstr "BSC TEST 使用 <0>tUSDT</0> / <1>tBox</1> 支付；定价仍读真实 BOX/USDT TWAP，勿与主网代币混淆。"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Sell"
+msgstr "卖出"
+
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Swap details"
+msgstr "兑换详情"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "USDT claimed {amount}"
+msgstr "USDT 已领取 {amount}"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Yesterday"
+msgstr "昨天"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "After minting, 100% of credit is released at a fixed daily rate"
+msgstr "铸造后 100% 的额度按每日固定释放"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Go mint"
+msgstr "去铸造"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxQueueSheet.tsx
+msgid "Load more"
+msgstr "加载更多"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Loading"
+msgstr "加载中"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Claimable this batch"
+msgstr "本笔可领取"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "This amount cannot fill a whole queue order. Refresh and retry with the latest amount."
+msgstr "当前兑换金额无法按队列整单成交，请刷新后按最新可兑金额重试"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Initial lock × <0>0.3%</0>, fixed each day."
+msgstr "期初锁仓 × <0>0.3%</0>，每日固定。"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Swap successful, received {amount} USDT"
+msgstr "兑换成功，收到 {amount} USDT"
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+#: src/components/Usdx/UsdxContractSheet.tsx
+#: src/components/Usdx/UsdxExplainSheet.tsx
+#: src/components/Usdx/UsdxQueueSheet.tsx
+#: src/components/Usdx/UsdxSwapDetail.tsx
+#: src/components/Usdx/UsdxTxConfirmSheet.tsx
+msgid "Close"
+msgstr "关闭"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Failed to read BOX balance, please refresh and retry"
+msgstr "BOX 余额读取失败，请刷新后重试"
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Mint USDX"
+msgstr "铸造 USDX"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Normal mode"
+msgstr "正常模式"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Filled"
+msgstr "已成交"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Remaining pending unlock"
+msgstr "剩余待解锁"

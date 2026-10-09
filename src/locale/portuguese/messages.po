@@ -1,0 +1,1460 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2023-08-16 14:55+0800\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: portuguese\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/hooks/useUsdxActivityData.ts
+msgid "Activity records failed to load"
+msgstr ""
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+msgid "Disconnect"
+msgstr "Disconnect"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "<0>0.5% → 0.1%</0>, decreases linearly over 24 hours while queued."
+msgstr "<0>0.5% → 0.1%</0>, cai linearmente em 24 h na fila."
+
+#: src/hooks/useUsdxClaimSellerAction.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "USDT claimed"
+msgstr ""
+
+#: src/hooks/useOSS.ts
+#: src/hooks/useOSS.ts
+msgid "File is required"
+msgstr "File is required"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Minting…"
+msgstr "Minting…"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Fully released on"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Minting paused"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Quoting…"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Failed to fetch quote, please try again"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMine.tsx
+msgid "My release plans"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Please refresh and retry"
+msgstr ""
+
+#: src/components/QRCodeLogin/ConnectWalletQRCode.tsx
+msgid "QR code expired, please refresh"
+msgstr "QR code expirado, por favor atualize"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Exit path"
+msgstr "Saída"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Claimed {amount} USDX"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Insufficient USDX balance, max redeem {0}"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Open"
+msgstr ""
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Days elapsed"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Restrictions"
+msgstr "Restrições"
+
+#: src/hooks/useUsdxFaucetClaim.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "On-chain client unavailable"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Free"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Insufficient BOX balance, max {0}"
+msgstr ""
+
+#: src/components/Usdx/UsdxMine.tsx
+msgid "View USDX contract"
+msgstr ""
+
+#: src/components/Usdx/UsdxQueueSheet.tsx
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Cancelling…"
+msgstr ""
+
+#: src/components/Usdx/UsdxApp.tsx
+msgid "Disconnected from wallet"
+msgstr "Desconectado"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Fee details"
+msgstr "Detalhes da taxa"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Redeem successful"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Pay"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Failed to read protocol status, please refresh"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMine.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Pending unlock"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Sign again"
+msgstr "Assinar novamente"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Mint"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "<0>1.2×</0> credit, all pending unlock (nothing credited at mint); released at 0.3% daily over 334 days, must <1>actively claim</1>. Locked amount cannot be transferred or redeemed."
+msgstr "Crédito <0>1.2×</0>: tudo pendente de desbloqueio (nada imediato no mint); 0.3%/dia em 334 dias; é preciso <1>resgatar</1>. O bloqueado não transfere nem resgata."
+
+#: src/hooks/useUsdxMintAction.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Invalid signature, please retry the swap"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Reading protocol status…"
+msgstr ""
+
+#: src/components/Usdx/UsdxActivity.tsx
+msgid "Failed to load records"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Releasing batches"
+msgstr "Lotes em liberação"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Earlier"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Waiting for previous step"
+msgstr "Waiting for previous step"
+
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+msgid "Wallet or config unavailable"
+msgstr ""
+
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+msgid "Minting unavailable, please refresh the quote"
+msgstr ""
+
+#: src/components/Usdx/UsdxActivity.tsx
+msgid "All records loaded"
+msgstr ""
+
+#: src/utils/request.ts
+msgid "Invalid login credentials, please login again [-2023]"
+msgstr "Invalid login credentials, please login again [-2023]"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Treasury <0>70%</0> · permanently locked LP <1>20%</1> · remaining 10%."
+msgstr "Tesouro <0>70%</0> · LP bloqueado <1>20%</1> · restante 10%."
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "No action needed"
+msgstr "No action needed"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "No credit at mint: the amount is recorded as pending unlock and released daily"
+msgstr ""
+
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxContractSheet.tsx
+msgid "BNB Smart Chain"
+msgstr ""
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+#: src/components/Usdx/UsdxContractSheet.tsx
+msgid "Copied"
+msgstr "Copied"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMine.tsx
+#: src/components/Usdx/UsdxQueueSheet.tsx
+msgid "Retry"
+msgstr "Retry"
+
+#: src/components/Usdx/UsdxApp.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Switch Network"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Claim all"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Sell settled"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Proceeds"
+msgstr "Recebimento"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Failed to read USDT balance, please refresh and retry"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "You receive"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Mint premium"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Buy USDX"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Treasury TVL"
+msgstr ""
+
+#: src/components/Usdx/UsdxApp.tsx
+msgid "Connected {0}, open account"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "333 equal days, remainder on day 334, 100% in total."
+msgstr "333 dias iguais, resto no dia 334, 100% no total."
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+#: src/components/Usdx/UsdxContractSheet.tsx
+msgid "Copy failed"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Total value"
+msgstr ""
+
+#: src/components/Usdx/UsdxContractSheet.tsx
+#: src/components/Usdx/UsdxMine.tsx
+msgid "USDX contract"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "You will receive"
+msgstr "Você receberá"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "<b>Redeemed at face value</b>, 1 USDX counts as 1 USDT."
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "BOX mark price unavailable; redeem by share × 99.5%"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Deposit amount (USDT)"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "{0} batches"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Fixed <0>0.5%</0>, instant (requires sufficient reserve)."
+msgstr "Fixo <0>0.5%</0>, instantâneo (reserva suficiente)."
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Insufficient {token} balance, max {amount}"
+msgstr ""
+
+#: src/hooks/useUsdxPositions.ts
+#: src/hooks/useUsdxPositions.ts
+msgid "Position read failed"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Discount mode"
+msgstr "Modo desconto"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Processing…"
+msgstr "Processando…"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "0.3% released daily; <0>actively claim</0> to mint as USDX."
+msgstr "0.3% ao dia; <0>resgate ativamente</0> para mintar USDX."
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Reading pay-token balances…"
+msgstr ""
+
+#: src/components/Usdx/UsdxMine.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Redeem USDX"
+msgstr ""
+
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Connect Wallet"
+msgstr "Ligar carteira"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "USDT → USDX <0>free</0>, instant."
+msgstr "USDT → USDX <0>grátis</0>, instantâneo."
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Released {0}"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Instant"
+msgstr ""
+
+#: src/components/Usdx/UsdxActivity.tsx
+msgid "Activity filters"
+msgstr ""
+
+#: src/hooks/useDeBoxDirectConnect.ts
+#: src/hooks/useDeBoxDirectConnect.ts
+msgid "No injected wallet detected"
+msgstr "No injected wallet detected"
+
+#: src/hooks/useUsdxFaucetClaim.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Faucet is unavailable in this environment"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Done"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Confirm redeem"
+msgstr ""
+
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxMine.tsx
+msgid "My"
+msgstr "Meu"
+
+#: src/components/Usdx/UsdxMine.tsx
+msgid "Failed to load activity"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+msgid "Mint failed, please try again"
+msgstr ""
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+#: src/components/Usdx/UsdxContractSheet.tsx
+msgid "Copy address"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Filled amount"
+msgstr ""
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+msgid "Claiming tUSDT…"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "BOX price changed. Sign again to mint with the latest quote."
+msgstr "O preço do BOX mudou. Assine novamente com a cotação mais recente para mintar."
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Contribution"
+msgstr "Aporte"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Claim failed, please try again"
+msgstr ""
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+msgid "Claim {USDX_FAUCET_CLAIM_USDT_LABEL} tUSDT + {USDX_FAUCET_CLAIM_BOX_LABEL} tBox"
+msgstr ""
+
+#: src/components/Usdx/UsdxQueueSheet.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "My open orders"
+msgstr ""
+
+#: src/hooks/useUsdxWallet.ts
+msgid "Failed to switch network"
+msgstr "Failed to switch network"
+
+#: src/components/Usdx/UsdxActivity.tsx
+msgid "My USDX activity"
+msgstr ""
+
+#: src/hooks/useDeBoxDirectConnect.ts
+msgid "Connection failed"
+msgstr "Connection failed"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Scan to connect any wallet"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Minimum sell is 1 USDX"
+msgstr "Venda mínima: 1 USDX"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Full aggregate failed; showing loaded batches"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Signing Permit2…"
+msgstr "Signing Permit2…"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Insufficient liquidity, try a smaller amount"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Minimum deposit is 1 USDT"
+msgstr ""
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+msgid "Claiming tBox…"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "How daily release is calculated"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Nothing to claim"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Order cancelled"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "USDT and BOX <0>50% each</0>, converted at the 24h average."
+msgstr "USDT e BOX <0>50% cada</0>, pela média 24 h."
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "About release rules"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Daily release total"
+msgstr ""
+
+#: src/components/Usdx/UsdxApp.tsx
+msgid "Main navigation"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Minimum received"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Insufficient USDX liquidity, buying unavailable"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Settlement"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Sell via the swap pool or redeem from the treasury."
+msgstr "Vender no pool ou resgatar do tesouro."
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Redeem failed, please try again"
+msgstr ""
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/hooks/useUsdxCancelSellAction.ts
+#: src/hooks/useUsdxClaimAction.ts
+#: src/hooks/useUsdxClaimSellerAction.ts
+#: src/hooks/useUsdxFaucetClaim.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxRedeemAction.ts
+#: src/hooks/useUsdxRedeemAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+#: src/hooks/useUsdxWallet.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Please switch to BNB Smart Chain"
+msgstr ""
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Total released"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Claim successful"
+msgstr "Claim successful"
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+msgid "USDX balance"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Insufficient {token} liquidity, max {amount}"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "{0} days left"
+msgstr ""
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+msgid "Block explorer"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Finish"
+msgstr "Finish"
+
+#: src/components/Usdx/UsdxMine.tsx
+msgid "Wallet balance"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "BOX mark price is unavailable, minting paused"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Confirmed"
+msgstr "Confirmed"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Approving BOX…"
+msgstr "Approving BOX…"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "USDX is fully burned; the treasury pays equivalent <0>USDT + BOX</0>."
+msgstr "USDX é queimado por completo; o tesouro paga <0>USDT + BOX</0> equivalentes."
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Reading sell quote…"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Minting is unavailable, please try again later"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Time"
+msgstr "Time"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Mint date"
+msgstr ""
+
+#: src/components/Usdx/UsdxMine.tsx
+msgid "Recent activity"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Payout"
+msgstr "Pagamento"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Submitting…"
+msgstr "Enviando…"
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Test tokens received"
+msgstr ""
+
+#: src/utils/request.ts
+#: src/utils/request.ts
+msgid "Token expired, please login again"
+msgstr "Token expired, please login again"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxMine.tsx
+msgid "All"
+msgstr "All"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Release rules"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Sell order"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Period"
+msgstr "Período"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Please enter a valid amount"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Multiple mints"
+msgstr "Vários mints"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Stabilizer paused, swap unavailable"
+msgstr ""
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Days remaining"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Submit order"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Cannot transfer, redeem, or cash out early."
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Where deposits go"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Failed to read sell quote, please refresh and retry"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Nature"
+msgstr "Natureza"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Fee"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Cancel & re-queue"
+msgstr "Cancelar e recolocar"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Signed"
+msgstr "Signed"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Waiting for wallet confirmation…"
+msgstr "Waiting for wallet confirmation…"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxMine.tsx
+#: src/components/Usdx/UsdxQueueSheet.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Loading…"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Reading status…"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Swap failed, please try again"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Daily release"
+msgstr "Liberação diária"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Treasury can redeem 1:1"
+msgstr ""
+
+#: src/hooks/useUsdxMintAction.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Request timed out, please retry"
+msgstr "A solicitação expirou, tente novamente"
+
+#: src/hooks/useOSS.ts
+msgid "The file size should be less than {0}MB."
+msgstr "The file size should be less than {0}MB."
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "{0} days"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Fully released"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Switch swap direction"
+msgstr ""
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "This mint"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "#{0}　Mint {1} USDX"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Approve USDT for Permit2"
+msgstr "Approve USDT for Permit2"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Mint batch not found"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Checking…"
+msgstr "Checking…"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Sell · open order"
+msgstr "Venda · ordem aberta"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Failed, please retry"
+msgstr "Falhou, tente novamente"
+
+#: src/components/QRCodeLogin/components/QRCodeStatus.tsx
+msgid "Please confirm on your phone"
+msgstr "Confirme no seu telefone"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Too many decimals, please reduce by one digit"
+msgstr ""
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Credit details"
+msgstr ""
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+msgid "Test tokens"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Claim USDT"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMine.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Claimable"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Failed to read stabilizer status, please refresh and retry"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "{days} days"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Switch to BNB Smart Chain to view USDX assets"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Permit2 signature for USDT and BOX"
+msgstr "Permit2 signature for USDT and BOX"
+
+#: src/components/Usdx/UsdxQueueSheet.tsx
+msgid "No open orders"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "{amount} USDX · {count} orders"
+msgstr ""
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Redeem"
+msgstr ""
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Claiming…"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Re-queued orders restart from 0.5%."
+msgstr "Reenfileirar reinicia em 0.5%."
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Connect your wallet to view USDX assets"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Confirm mint"
+msgstr ""
+
+#: src/components/Usdx/UsdxActivity.tsx
+msgid "Activity history"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Activity"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Swap liquidity"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Order placed, will settle {amount} USDT"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "What is pending unlock"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Sell USDX"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "You redeem"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Waiting to retry"
+msgstr "Aguardando nova tentativa"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Browser extension / mobile app"
+msgstr ""
+
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxApp.tsx
+msgid "Unsupported network, switch to BNB Smart Chain"
+msgstr ""
+
+#: src/components/QRCodeLogin/components/CountdownTimer.tsx
+msgid "Cancel authorization"
+msgstr "Cancelar autorização"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Redeem fee"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "About minting"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "USDX amount to redeem"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Claiming paused"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Price"
+msgstr "Price"
+
+#: src/components/Modal/LoginModal.tsx
+msgid "SCAN"
+msgstr "ESCANEAR"
+
+#: src/components/Usdx/UsdxMine.tsx
+msgid "My USDX"
+msgstr "Meu USDX"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "USDX minting is not enabled in this environment"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Treasury is below face-value liabilities; redeem at NAV"
+msgstr ""
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Time progress"
+msgstr "Progresso no tempo"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Insufficient USDT balance, max {0}"
+msgstr ""
+
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxRedeemAction.ts
+#: src/hooks/useUsdxRedeemAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+msgid "USDX config or client unavailable"
+msgstr ""
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Total deposit value"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Queue head is {queue} USDX; this swap of {requested} USDT cannot fill a whole order. Use the queue-head amount."
+msgstr ""
+
+#: src/components/Usdx/UsdxQueueSheet.tsx
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Open this page from a release plan or mint record"
+msgstr ""
+
+#: src/components/Usdx/UsdxApp.tsx
+msgid "Disconnect failed"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Redeem ratio"
+msgstr ""
+
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxRedeemAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Enter a valid amount"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Today"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Released —"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Failed to read protocol status"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Failed to read {0} balance, please refresh and retry"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Failed to load"
+msgstr ""
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+msgid "My wallet"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Deposit amount"
+msgstr ""
+
+#: src/components/Usdx/UsdxActivity.tsx
+msgid "No activity in this category"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "More info"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Day {elapsed} / {totalDays}"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Redeeming paused"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Redeemed {usdt} USDT and {box} BOX"
+msgstr ""
+
+#: src/hooks/useUsdxCancelSellAction.ts
+#: src/hooks/useUsdxCancelSellAction.ts
+msgid "Order read failed"
+msgstr ""
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Claim"
+msgstr "Claim"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "BOX price changed"
+msgstr "Preço do BOX mudou"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "#{0} mint details"
+msgstr ""
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Back"
+msgstr "Back"
+
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "About redeeming"
+msgstr "Sobre o resgate"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Reading stabilizer status…"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "You deposit"
+msgstr "Você deposita"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Approving USDT…"
+msgstr "Approving USDT…"
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+msgid "Connect wallet to claim"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "<b>BOX mark price unavailable</b>; paid by share × 99.5%. Redeeming is <b>not paused</b>."
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "{dir} · {pay} → {recv}"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Preparing transaction…"
+msgstr "Preparando a transação…"
+
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Record not found"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Confirming…"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Reading {0} balance…"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Failed to load positions"
+msgstr ""
+
+#: src/components/QRCodeLogin/components/QRCodeStatus.tsx
+msgid "Refresh"
+msgstr "Refresh"
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Receive"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Mint successful, {lockText} USDX credit registered as pending unlock"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Approve BOX for Permit2"
+msgstr "Approve BOX for Permit2"
+
+#: src/utils/request.ts
+msgid "Your account has logged in on another device, please login again [-2018]"
+msgstr "Your account has logged in on another device, please login again [-2018]"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Cancelled in wallet"
+msgstr "Cancelled in wallet"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Market orders"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Buying"
+msgstr "Compra"
+
+#: src/components/QRCodeLogin/ConnectWalletQRCode.tsx
+msgid "Scan to log in to DeBox"
+msgstr "Escaneie para entrar no DeBox"
+
+#: src/hooks/useUsdxCancelSellAction.ts
+#: src/hooks/useUsdxClaimAction.ts
+#: src/hooks/useUsdxClaimAction.ts
+#: src/hooks/useUsdxClaimAction.ts
+#: src/hooks/useUsdxClaimSellerAction.ts
+#: src/hooks/useUsdxFaucetClaim.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "USDX config missing"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Failed to fetch redeem quote, please try again"
+msgstr ""
+
+#: src/components/Usdx/UsdxQueueSheet.tsx
+msgid "Filled {0}"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Cancel failed, please try again"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "When the treasury is short, pay <0>pro rata at NAV</0>, same 0.5% redeem fee. The discount factor makes your proceeds below your share, so remaining USDX backing thickens."
+msgstr "Se faltar, pagamento <0>pró-rata no NAV</0>, mesma taxa 0.5%. O fator de desconto deixa o recebimento abaixo da cota e engrossa o lastro do USDX restante."
+
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Reading stabilizer inventory…"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Buy"
+msgstr "Buy"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Failed to read inventory, please refresh and retry"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Completed"
+msgstr "Completed"
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Pay amount"
+msgstr ""
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+#: src/hooks/useUsdxFaucetClaim.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Failed to claim test tokens, please try again"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "On-contract <0>accounting equity</0>, not yet minted as USDX; it will not show in the wallet."
+msgstr "<0>Participação contábil</0> no contrato, ainda não mintada como USDX; não aparece na carteira."
+
+#: src/components/Usdx/UsdxMine.tsx
+msgid "{0} Claimable"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Minimum buy is 0.01 USDT"
+msgstr "Compra mínima: 0.01 USDT"
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Wallet"
+msgstr ""
+
+#: src/hooks/useUsdxSwapSellAction.ts
+msgid "Failed to submit swap, please try again"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "When the treasury can cover face value, redeem at <0>1:1 face value</0> with a 0.5% redeem fee."
+msgstr "Se o tesouro cobre o valor de face, resgate <0>1:1</0> com taxa 0.5%."
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Swap successful, received {amount} USDX"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwapDetail.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Cancel order"
+msgstr ""
+
+#: src/components/Usdx/UsdxQueueSheet.tsx
+msgid "Failed to load open orders, please refresh and retry"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Failed to read USDX balance, please refresh and retry"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Daily {0}"
+msgstr ""
+
+#: src/components/Usdx/UsdxContractSheet.tsx
+msgid "View on BscScan"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/components/Usdx/UsdxRedeem.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/hooks/useUsdxCancelSellAction.ts
+#: src/hooks/useUsdxClaimAction.ts
+#: src/hooks/useUsdxClaimSellerAction.ts
+#: src/hooks/useUsdxFaucetClaim.ts
+#: src/hooks/useUsdxMintAction.ts
+#: src/hooks/useUsdxRedeemAction.ts
+#: src/hooks/useUsdxSwapBuyAction.ts
+#: src/hooks/useUsdxSwapSellAction.ts
+#: src/utils/usdx/usdxMessages.ts
+msgid "Please connect your wallet"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Pay ratio"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "{0} USDX / day"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Treasury is below face value, <b>redeem pro rata at NAV</b>"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "No valid price; showing quantity only, no valuation."
+msgstr "Sem preço válido; só quantidade, sem avaliação."
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxApp.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/components/Usdx/UsdxSwap.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Swap"
+msgstr "Swap"
+
+#: src/components/Usdx/UsdxPlan.tsx
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Release plan details"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "No release plans yet"
+msgstr "Ainda não há planos de liberação"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Recommended · in-app connect"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Redeem amount"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Cancelled"
+msgstr "Cancelled"
+
+#: src/hooks/useUsdxClaimSellerAction.ts
+msgid "USDT claimed {label}"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Waiting for wallet signature…"
+msgstr "Waiting for wallet signature…"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Open order (FIFO, not instant)"
+msgstr ""
+
+#: src/components/Usdx/UsdxSwap.tsx
+msgid "Sell · instant fill"
+msgstr "Venda · preenchimento instantâneo"
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Each mint is independent; amounts due but unclaimed <0>are not voided</0>."
+msgstr "Cada mint é independente; valores devidos não resgatados <0>não são anulados</0>."
+
+#: src/components/Usdx/UsdxFaucetBanner.tsx
+msgid "BSC TEST pays with <0>tUSDT</0> / <1>tBox</1>; pricing still uses the real BOX/USDT TWAP. Do not confuse them with mainnet tokens."
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Sell"
+msgstr "Sell"
+
+#: src/components/Usdx/UsdxSwapDetail.tsx
+msgid "Swap details"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "USDT claimed {amount}"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Yesterday"
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "After minting, 100% of credit is released at a fixed daily rate"
+msgstr "Após o mint, 100% do crédito é liberado a uma taxa diária fixa"
+
+#: src/components/Usdx/UsdxClaim.tsx
+msgid "Go mint"
+msgstr "Ir mintar"
+
+#: src/components/Usdx/UsdxActivity.tsx
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxQueueSheet.tsx
+msgid "Load more"
+msgstr ""
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Loading"
+msgstr "Loading"
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Claimable this batch"
+msgstr ""
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "This amount cannot fill a whole queue order. Refresh and retry with the latest amount."
+msgstr ""
+
+#: src/components/Usdx/UsdxClaim.tsx
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Initial lock × <0>0.3%</0>, fixed each day."
+msgstr "Lock inicial × <0>0.3%</0>, fixo por dia."
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Swap successful, received {amount} USDT"
+msgstr ""
+
+#: src/components/Usdx/UsdxAccountSheet.tsx
+#: src/components/Usdx/UsdxContractSheet.tsx
+#: src/components/Usdx/UsdxExplainSheet.tsx
+#: src/components/Usdx/UsdxQueueSheet.tsx
+#: src/components/Usdx/UsdxSwapDetail.tsx
+#: src/components/Usdx/UsdxTxConfirmSheet.tsx
+msgid "Close"
+msgstr "Close"
+
+#: src/components/Usdx/UsdxMint.tsx
+msgid "Failed to read BOX balance, please refresh and retry"
+msgstr ""
+
+#: src/components/Usdx/UsdxMint.tsx
+#: src/utils/usdx/usdxMessages.ts
+msgid "Mint USDX"
+msgstr ""
+
+#: src/components/Usdx/UsdxRedeem.tsx
+msgid "Normal mode"
+msgstr "Modo normal"
+
+#: src/utils/usdx/usdxMessages.ts
+msgid "Filled"
+msgstr ""
+
+#: src/components/Usdx/UsdxPlan.tsx
+msgid "Remaining pending unlock"
+msgstr ""
